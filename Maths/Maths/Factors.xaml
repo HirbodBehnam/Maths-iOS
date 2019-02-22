@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maths.Factors" Title="Factors">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <Label Text="Find factors of a number"
+                HorizontalOptions="CenterAndExpand" />
+            <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
+                   Placeholder="Enter number" x:Name="FactorsInput"
+                   Margin="10,10,10,0"/>
+            <Button Text="Find" HorizontalOptions="Center" Clicked="Button_Clicked"/>
+            <Label x:Name="Result" Margin="10,0,0,0"/>
+            <ListView x:Name="ResultList" SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding ListString}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

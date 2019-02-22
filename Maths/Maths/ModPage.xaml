@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maths.ModPage" Title="Mod">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <Label Text="Enter dividend and divisor."
+                HorizontalOptions="CenterAndExpand" />
+            <Entry x:Name="ModDividend" Keyboard="Numeric" 
+                   Placeholder="Enter dividend" Margin="10,10,10,0"/>
+            <Entry x:Name="ModDivisor" Keyboard="Numeric" 
+                   Placeholder="Enter divisor" Margin="10,0"/>
+            <Button Text="Find" Clicked="FindBTN_Clicked"/>
+            <Label x:Name="Result"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maths.Factorize" Title="Factorize">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <Label Text="Factorize a number to prime factors." HorizontalTextAlignment="Center"/>
+            <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
+                   Placeholder="Enter number" x:Name="InputEntry"
+                   Margin="10,10,10,0"/>
+            <Button Clicked="FindBTN_Clicked" Text="Find"/>
+            <StackLayout x:Name="StackResult" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

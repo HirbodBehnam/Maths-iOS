@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maths.GCD" Title="GCD &#38; LCM">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <Label Text="Find GCD or LCM of a number. Enter numbers like: num1,num2,num3,num4,..."
+                   VerticalOptions="Start"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="CenterAndExpand" />
+            <Entry HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                   Margin="10,0"
+                   x:Name="EntryNumbers" Placeholder="Enter numbers"/>
+            <Grid Margin="0,10" HorizontalOptions="CenterAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Margin="5"
+                    Text="LCM"
+                    HorizontalTextAlignment="Start"
+                    Grid.Column="2"/>
+                <Switch
+                    Toggled="LCMorGCDSwitch_Toggled"
+                    x:Name="LCMorGCDSwitch"
+                    Grid.Column="1"
+                    />
+                <Label
+                    Margin="5"
+                    Text="GCD"
+                    HorizontalTextAlignment="End"
+                    Grid.Column="0"/>
+            </Grid>
+            <Button Text="Find" Clicked="Find_Clicked"/>
+            <Label Margin="10,0" Text="The GCD is:" x:Name="ResultLBL"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
