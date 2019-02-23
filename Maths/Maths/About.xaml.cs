@@ -27,5 +27,13 @@ namespace Maths
         {
             Device.OpenUri(new Uri("mailto:chrome.hiri.angry@gmail.com"));
         }
+        private void TeleBot_Clicked(object sender, EventArgs e)
+        {
+            Device.OpenUri(new Uri("https://t.me/raremathcalculationsbot"));
+        }
+        private void Website_Clicked(object sender, EventArgs e)
+        {
+            Device.OpenUri(new Uri("https://hirbodbehnam.github.io"));
+        }
     }
 }

@@ -11,10 +11,12 @@
                     HorizontalTextAlignment="Center">
                     <Label.Text>
                         Created by Hirbod Behnam  
-Powered By Xamarin
+Powered By Xamarin Forms
                     </Label.Text>
                 </Label>
                 <Button Text="Android App" Clicked="AndroidButton_Clicked"/>
+                <Button Text="Website" Clicked="Website_Clicked" Margin="0,-20"/>
+                <Button Text="Telegram Bot" Clicked="TeleBot_Clicked"/>
                 <Button Text="Report Bug or Idea" Clicked="BugReport_Clicked"/>
             </StackLayout>
         </StackLayout>
