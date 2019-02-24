@@ -23,9 +23,25 @@ namespace Maths
         public static ulong[] Factorize(ulong num)
         {
             List<ulong> factorized = new List<ulong>();
-            for(ulong i = 2;num > 1; i++)
+            while (num % 2 == 0)
+            {
+                num /= 2;
+                factorized.Add(2);
+            }
+            while (num % 3 == 0)
+            {
+                num /= 3;
+                factorized.Add(3);
+            }
+            for(ulong i = 5;num > 1; i+=4)
             {
                 while(num % i == 0)
+                {
+                    num /= i;
+                    factorized.Add(i);
+                }
+                i += 2;
+                while (num % i == 0)
                 {
                     num /= i;
                     factorized.Add(i);
