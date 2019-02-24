@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foundation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,8 @@ namespace Maths
 	{
 		public About ()
 		{
-			InitializeComponent ();
+            InitializeComponent ();
+            VersionInfo.Text = "Version " + NSBundle.MainBundle.ObjectForInfoDictionary("CFBundleShortVersionString").ToString() + " Build Number: " + NSBundle.MainBundle.ObjectForInfoDictionary("CFBundleVersion").ToString();
 		}
 
         private void AndroidButton_Clicked(object sender, EventArgs e)

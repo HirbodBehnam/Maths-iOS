@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maths.About" Title="About">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout Padding="20">
                 <Label
                     VerticalOptions="CenterAndExpand" 
@@ -19,6 +19,7 @@ Powered By Xamarin Forms
                 <Button Text="Telegram Bot" Clicked="TeleBot_Clicked"/>
                 <Button Text="Report Bug or Idea" Clicked="BugReport_Clicked"/>
             </StackLayout>
+            <Label VerticalOptions="EndAndExpand" HorizontalTextAlignment="Center" Text="Version" x:Name="VersionInfo"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
