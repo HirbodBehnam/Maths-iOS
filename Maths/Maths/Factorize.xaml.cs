@@ -79,7 +79,7 @@ namespace Maths
              * worked. This is a little bit safer way to show the results but
              * it have to create another web view every time it factorizes a
              * number.
-             * */
+             */
             try
             {
                 StackResult.Children.RemoveAt(0);
