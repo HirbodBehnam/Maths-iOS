@@ -1,10 +1,10 @@
-﻿using Foundation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,7 +17,7 @@ namespace Maths
 		public About ()
 		{
             InitializeComponent ();
-            VersionInfo.Text = "Version " + NSBundle.MainBundle.ObjectForInfoDictionary("CFBundleShortVersionString").ToString() + " Build Number: " + NSBundle.MainBundle.ObjectForInfoDictionary("CFBundleVersion").ToString();
+            VersionInfo.Text = "Version " + VersionTracking.CurrentVersion + " Build Number: " + VersionTracking.CurrentBuild;
 		}
 
         private void AndroidButton_Clicked(object sender, EventArgs e)

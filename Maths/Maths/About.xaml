@@ -19,7 +19,7 @@ Powered By Xamarin Forms
                 <Button Text="Telegram Bot" Clicked="TeleBot_Clicked"/>
                 <Button Text="Report Bug or Idea" Clicked="BugReport_Clicked"/>
             </StackLayout>
-            <Label VerticalOptions="EndAndExpand" HorizontalTextAlignment="Center" Text="Version" x:Name="VersionInfo"/>
+            <Label VerticalOptions="EndAndExpand" HorizontalTextAlignment="Center" Text="Version" x:Name="VersionInfo" Margin="0,0,0,20"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
