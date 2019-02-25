@@ -31,9 +31,9 @@
 	<key>CFBundleName</key>
 	<string>Maths</string>
 	<key>CFBundleVersion</key>
-	<string>13</string>
+	<string>14</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.2</string>
+	<string>1.1.0</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcons1.appiconset</string>
 </dict>

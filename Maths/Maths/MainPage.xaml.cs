@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -12,6 +13,30 @@ namespace Maths
         public MainPage()
         {
             InitializeComponent();
+            //Check for update
+            new Task(() =>
+            {
+                try
+                {
+                    string URL = "https://hirbodbehnam.github.io//ios_updater.html";
+                    using (WebClient client = new WebClient()) 
+                    {
+                        int remoteBuild = int.Parse(client.DownloadString(URL));
+                        int localBuild = int.Parse(Xamarin.Essentials.VersionTracking.CurrentBuild);
+                        if (remoteBuild > localBuild)
+                        {
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
+                                ShowUpdateDialog(remoteBuild);
+                            });
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+            }).Start();
         }
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -34,7 +59,12 @@ namespace Maths
                     break;
             }
         }
-
+        async void ShowUpdateDialog(int RemoteBuild)
+        {
+            bool answer = await DisplayAlert("Update", "An update found for Maths to build version " + RemoteBuild + ". Do you want to update now?", "No", "Yes");
+            if (!answer)
+                Device.OpenUri(new Uri("https://new.sibapp.com/applications/maths"));  
+        }
         private void MenuToolBarClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new About());
