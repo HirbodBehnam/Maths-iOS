@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Maths"
              x:Class="Maths.MainPage"
+             NavigationPage.HasBackButton="False"
              Title="Maths">
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="?" Clicked="MenuToolBarClicked"/>
     </ContentPage.ToolbarItems>
     <StackLayout>
-        <ListView SelectionMode="None" ItemTapped="ListView_ItemTapped">
+        <ListView SelectionMode="None" ItemTapped="ListView_ItemTapped" x:Name="MainList">
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Factors</x:String>

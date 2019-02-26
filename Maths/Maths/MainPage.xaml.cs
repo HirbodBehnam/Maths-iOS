@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Maths
@@ -22,10 +23,10 @@ namespace Maths
                     using (WebClient client = new WebClient()) 
                     {
                         int remoteBuild = int.Parse(client.DownloadString(URL));
-                        int localBuild = int.Parse(Xamarin.Essentials.VersionTracking.CurrentBuild);
+                        int localBuild = int.Parse(VersionTracking.CurrentBuild);
                         if (remoteBuild > localBuild)
                         {
-                            Device.BeginInvokeOnMainThread(() =>
+                            MainThread.BeginInvokeOnMainThread(() =>
                             {
                                 ShowUpdateDialog(remoteBuild);
                             });
@@ -37,6 +38,7 @@ namespace Maths
                     Console.WriteLine(e.ToString());
                 }
             }).Start();
+            
         }
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {

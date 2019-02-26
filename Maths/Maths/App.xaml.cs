@@ -10,8 +10,10 @@ namespace Maths
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage(new MainPage());
+            if (Xamarin.Essentials.Preferences.ContainsKey(LanguageC.SavedName))
+                MainPage = new NavigationPage(new MainPage());
+            else
+                MainPage = new NavigationPage(new Language());
         }
 
         protected override void OnStart()
