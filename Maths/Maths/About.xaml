@@ -14,6 +14,7 @@
 Powered By Xamarin Forms
                     </Label.Text>
                 </Label>
+                <Button Text="Change Language" Clicked="Language_Clicked"/>
                 <Button Text="Android App" Clicked="AndroidButton_Clicked"/>
                 <Button Text="Website" Clicked="Website_Clicked" Margin="0,-20"/>
                 <Button Text="Telegram Bot" Clicked="TeleBot_Clicked"/>

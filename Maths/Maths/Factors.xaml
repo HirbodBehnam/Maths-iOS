@@ -5,11 +5,11 @@
     <ContentPage.Content>
         <StackLayout Padding="15">
             <Label Text="Find factors of a number"
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand" x:Name="Info" />
             <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
                    Placeholder="Enter number" x:Name="FactorsInput"
                    Margin="10,10,10,0"/>
-            <Button Text="Find" HorizontalOptions="Center" Clicked="Button_Clicked"/>
+            <Button Text="Find" HorizontalOptions="Center" Clicked="Button_Clicked" x:Name="FindBTN"/>
             <Label x:Name="Result" Margin="10,0,0,0"/>
             <ListView x:Name="ResultList" SelectionMode="None">
                 <ListView.ItemTemplate>

@@ -4,11 +4,11 @@
              x:Class="Maths.PrimeCheck" Title="Prime Checker">
     <ContentPage.Content>
         <StackLayout Padding="15">
-            <Label Text="Check if a number is prime." HorizontalTextAlignment="Center"/>
+            <Label Text="Detects if a number is prime or not" HorizontalTextAlignment="Center" x:Name="Info"/>
             <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
                    Placeholder="Enter number" x:Name="InputEntry"
                    Margin="10,10,10,0"/>
-            <Button Clicked="FindBTN_Clicked" Text="Find"/>
+            <Button Clicked="FindBTN_Clicked" Text="Check" x:Name="CheckBTN"/>
             <Label x:Name="Result"/>
         </StackLayout>
     </ContentPage.Content>

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +12,13 @@ namespace Maths
         public Factorize ()
 		{
 			InitializeComponent ();
+            if(MainPage.SelectedLanguage == LanguageE.Persian)
+            {
+                Title = "تجزیه";
+                Info.Text = MainPage.MenuPersianItems["تجزیه"];
+                FindBTN.Text = "پیدا کن";
+                InputEntry.Placeholder = "عدد را وارد کنید";
+            }
         }
 
         private void FindBTN_Clicked(object sender, EventArgs e)
@@ -27,12 +31,16 @@ namespace Maths
             }
             catch (OverflowException)
             {
-                DisplayAlert("Error", "The number you entered is too big.", "OK");
+                DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                    MainPage.SelectedLanguage == LanguageE.English ? "The number you entered is too big." : "عدد وارد شده بیش از حد بزرگ است.",
+                    MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
             catch (FormatException)
             {
-                DisplayAlert("Error", "Invalid number format. Number must be a natural number.", "OK");
+                DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                    MainPage.SelectedLanguage == LanguageE.English ? "Invalid number format. Number must be a natural number." : "عدد وارد شده نامعتبر است. عدد باید عدد طبیعی باشد.",
+                    MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
             catch (Exception ex)
@@ -42,7 +50,9 @@ namespace Maths
             }
             if(Number < 2)
             {
-                DisplayAlert("Error", "Number cannot be less than 2.", "OK");
+                DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                    MainPage.SelectedLanguage == LanguageE.English ? "Number cannot be less than 2." : "عدد نمی تواند کمتر از 2 باشد.",
+                    MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
             ulong[] array = MathFunctions.Factorize(Number);

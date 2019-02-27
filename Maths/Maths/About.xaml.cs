@@ -37,5 +37,10 @@ namespace Maths
         {
             Device.OpenUri(new Uri("https://hirbodbehnam.github.io"));
         }
+
+        private void Language_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Language());
+        }
     }
 }

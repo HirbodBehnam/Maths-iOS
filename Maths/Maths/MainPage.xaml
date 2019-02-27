@@ -9,17 +9,7 @@
         <ToolbarItem Name="?" Clicked="MenuToolBarClicked"/>
     </ContentPage.ToolbarItems>
     <StackLayout>
-        <ListView SelectionMode="None" ItemTapped="ListView_ItemTapped" x:Name="MainList">
-            <ListView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Factors</x:String>
-                    <x:String>GCD and LCM</x:String>
-                    <x:String>Mod</x:String>
-                    <x:String>Factorize</x:String>
-                    <x:String>Prime Checker</x:String>
-                </x:Array>
-            </ListView.ItemsSource>
-        </ListView>
+        <ListView RowHeight="100" x:Name="MainList"/>
     </StackLayout>
 
 </ContentPage>

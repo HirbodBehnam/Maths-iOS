@@ -1,6 +1,5 @@
 ﻿using System;
 
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,16 +15,16 @@ namespace Maths
 
         private void English_Clicked(object sender, EventArgs e)
         {
+            LanguageC.SaveLanguage(LanguageE.English);
             Navigation.PushAsync(new MainPage());
             Navigation.RemovePage(this);
-            Preferences.Set(LanguageC.SavedName, 0);
         }
 
         private void Persian_Clicked(object sender, EventArgs e)
         {
+            LanguageC.SaveLanguage(LanguageE.Persian);
             Navigation.PushAsync(new MainPage());
             Navigation.RemovePage(this);
-            Preferences.Set(LanguageC.SavedName, 1);
         }
     }
 }

@@ -15,7 +15,20 @@ namespace Maths
 		public GCD ()
 		{
 			InitializeComponent ();
-		}
+            if (MainPage.SelectedLanguage == LanguageE.Persian)
+            {
+                Title = "ب.م.م و ک.م.م";
+                Info.Text = MainPage.MenuPersianItems["ب.م.م و ک.م.م"];
+                Info.Text += ". اعداد را به مانند زیر وارد کنید:";
+                Info.Text += "\nnum1,num2,num3,num4,...";
+                FindBTN.Text = "حساب کن";
+                Result.HorizontalOptions = new LayoutOptions(LayoutAlignment.End, true);
+                Result.HorizontalTextAlignment = TextAlignment.End;
+                LCMSwitchTXT.Text = "ک.م.م";
+                GCDSwitchTXT.Text = "ب.م.م";
+                EntryNumbers.Placeholder = "اعداد را وارد کنید";
+            }
+        }
 
         private void Find_Clicked(object sender, EventArgs e)
         {
@@ -30,22 +43,31 @@ namespace Maths
                     {
                         nums[i] = Convert.ToUInt64(numbersSplitted[i].Trim());
                         if (nums[i] == 0)
-                            throw new FormatException();
+                        {
+                            DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                                MainPage.SelectedLanguage == LanguageE.English ? "You cannot input 0." : "عدد نمی تواند صفر باشد.",
+                                MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
+                            return;
+                        }
                         if (nums[i] == 1)
                         {
-                            ResultLBL.Text = "The GCD is: 1";
+                            Result.Text = MainPage.SelectedLanguage == LanguageE.English ? "The GCD is: 1" : "ب.م.م برابر یک است.";
                             return;
                         }
                     }
                 }
                 catch (OverflowException)
                 {
-                    DisplayAlert("Error", $"Too big number on index {i + 1} ({numbersSplitted[i]}).", "OK");
+                    DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                        MainPage.SelectedLanguage == LanguageE.English ? $"Too big number on index {i + 1} ({numbersSplitted[i]})." : "عدد خیلی بزرگی وارد کریدید:\n" + numbersSplitted[i],
+                        MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                     return;
                 }
                 catch (FormatException)
                 {
-                    DisplayAlert("Error", $"Invalid number format on index {i+1} ({numbersSplitted[i]}). Number must be a natural number.", "OK");
+                    DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                        MainPage.SelectedLanguage == LanguageE.English ? $"Invalid formatted number on index {i + 1} ({numbersSplitted[i]})." : "عدد نامعتبری وارد کریدید:\n" + numbersSplitted[i],
+                        MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                     return;
                 }
                 catch (Exception ex)
@@ -56,7 +78,9 @@ namespace Maths
             }
             if (nums.Length < 2)
             {
-                DisplayAlert("Error", "Enter at least 2 numbers.", "OK");
+                DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                    MainPage.SelectedLanguage == LanguageE.English ? "Enter at least 2 numbers." : "دست کم دو عدد وارد کنید.",
+                    MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
             if (LCMorGCDSwitch.IsToggled) //LCM
@@ -68,19 +92,20 @@ namespace Maths
                     numTemp = nums[i];
                     big = (big / BigInteger.GreatestCommonDivisor(big, numTemp) * numTemp);
                 }
-                ResultLBL.Text = "The LCM is: " + big;
+                if(MainPage.SelectedLanguage == LanguageE.English)
+                    Result.Text = "The LCM is: " + big;
+                else
+                    Result.Text = "ک.م.م برابر است با " + big;
             }
             else //GCD
             {
                 for(int i = nums.Length; i-- > 1;)
-                    nums[i - 1] = MathFunctions.GCD(nums[i - 1], nums[i]);           
-                ResultLBL.Text = "The GCD is: " + nums[0];
+                    nums[i - 1] = MathFunctions.GCD(nums[i - 1], nums[i]);
+                if (MainPage.SelectedLanguage == LanguageE.English)
+                    Result.Text = "The GCD is: " + nums[0];
+                else
+                    Result.Text = "ب.م.م برابر است با " + nums[0];
             }
-        }
-
-        private void LCMorGCDSwitch_Toggled(object sender, ToggledEventArgs e)
-        {
-            ResultLBL.Text = "The " + (LCMorGCDSwitch.IsToggled ? "LCM" : "GCD") +" is:" ;
         }
     }
 }

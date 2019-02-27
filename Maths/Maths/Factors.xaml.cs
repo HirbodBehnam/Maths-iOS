@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,6 +13,15 @@ namespace Maths
 		public Factors ()
 		{
 			InitializeComponent ();
+            if(MainPage.SelectedLanguage == LanguageE.Persian)
+            {
+                Title = "شمارنده ها";
+                Info.Text = MainPage.MenuPersianItems["شمارنده ها"];
+                FindBTN.Text = "پیدا کن";
+                FactorsInput.Placeholder = "عدد را وارد کنید";
+                Result.HorizontalOptions = new LayoutOptions(LayoutAlignment.End, true);
+                Result.HorizontalTextAlignment = TextAlignment.End;
+            }
 		}
         private void Button_Clicked(object sender, EventArgs e)
         {
@@ -30,12 +36,16 @@ namespace Maths
             }
             catch (OverflowException)
             {
-                DisplayAlert("Error", "The number you entered is too big.", "OK");
+                DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                    MainPage.SelectedLanguage == LanguageE.English ? "The number you entered is too big." : "عدد وارد شده بیش از حد بزرگ است.",
+                    MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
             catch (FormatException)
             {
-                DisplayAlert("Error", "Invalid number format. Number must be a natural number.", "OK");
+                DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                    MainPage.SelectedLanguage == LanguageE.English ? "Invalid number format. Number must be a natural number." : "عدد وارد شده نامعتبر است. عدد باید عدد طبیعی باشد.",
+                    MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
             catch (Exception ex)
@@ -58,11 +68,18 @@ namespace Maths
             ObservableCollection<StringInList> FactorsAdaptor = new ObservableCollection<StringInList>();
             //Show
             foreach(long a in factors)
-            {
                 FactorsAdaptor.Add(new StringInList { ListString = a.ToString() });
-            }
             ResultList.ItemsSource = FactorsAdaptor;
-            Result.Text = Number + " has " + factors.Count + " factors.";
+            if (MainPage.SelectedLanguage == LanguageE.English)
+                Result.Text = Number + " has " + factors.Count + " factors.";
+            else
+            {
+                Result.Text = "عدد ";
+                Result.Text += Number;
+                Result.Text += " دارای ";
+                Result.Text += factors.Count;
+                Result.Text += " شمارنده است.";
+            }
         }
     }
     public class StringInList

@@ -4,11 +4,11 @@
              x:Class="Maths.Factorize" Title="Factorize">
     <ContentPage.Content>
         <StackLayout Padding="15">
-            <Label Text="Factorize a number to prime factors." HorizontalTextAlignment="Center"/>
+            <Label Text="Factorize a number to prime factors." HorizontalTextAlignment="Center" x:Name="Info"/>
             <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
                    Placeholder="Enter number" x:Name="InputEntry"
                    Margin="10,10,10,0"/>
-            <Button Clicked="FindBTN_Clicked" Text="Find"/>
+            <Button Clicked="FindBTN_Clicked" Text="Find" x:Name="FindBTN"/>
             <StackLayout x:Name="StackResult" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             </StackLayout>
         </StackLayout>

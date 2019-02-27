@@ -7,7 +7,7 @@
             <Label Text="Find GCD or LCM of a number. Enter numbers like: num1,num2,num3,num4,..."
                    VerticalOptions="Start"
                    HorizontalTextAlignment="Center"
-                   HorizontalOptions="CenterAndExpand" />
+                   HorizontalOptions="CenterAndExpand" x:Name="Info"/>
             <Entry HorizontalOptions="FillAndExpand" VerticalOptions="Center"
                    Margin="10,0"
                    x:Name="EntryNumbers" Placeholder="Enter numbers"/>
@@ -21,20 +21,21 @@
                     Margin="5"
                     Text="LCM"
                     HorizontalTextAlignment="Start"
+                    x:Name="LCMSwitchTXT"
                     Grid.Column="2"/>
                 <Switch
-                    Toggled="LCMorGCDSwitch_Toggled"
                     x:Name="LCMorGCDSwitch"
                     Grid.Column="1"
                     />
                 <Label
                     Margin="5"
                     Text="GCD"
+                    x:Name="GCDSwitchTXT"
                     HorizontalTextAlignment="End"
                     Grid.Column="0"/>
             </Grid>
-            <Button Text="Find" Clicked="Find_Clicked"/>
-            <Label Margin="10,0" Text="The GCD is:" x:Name="ResultLBL"/>
+            <Button Text="Find" Clicked="Find_Clicked" x:Name="FindBTN"/>
+            <Label Margin="10,0" x:Name="Result"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

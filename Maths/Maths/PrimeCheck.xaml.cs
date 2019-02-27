@@ -15,7 +15,16 @@ namespace Maths
 		public PrimeCheck ()
 		{
 			InitializeComponent ();
-		}
+            if (MainPage.SelectedLanguage == LanguageE.Persian)
+            {
+                Title = "تشخیص عدد اول";
+                Info.Text = MainPage.MenuPersianItems["تشخیص عدد اول"];
+                Result.HorizontalOptions = new LayoutOptions(LayoutAlignment.End, true);
+                Result.HorizontalTextAlignment = TextAlignment.End;
+                InputEntry.Placeholder = "عدد را وارد کنید";
+                CheckBTN.Text = "چک کن";
+            }
+        }
         private void FindBTN_Clicked(object sender, EventArgs e)
         {
             ulong Number;
@@ -26,12 +35,16 @@ namespace Maths
             }
             catch (OverflowException)
             {
-                DisplayAlert("Error", "The number you entered is too big.", "OK");
+                DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                    MainPage.SelectedLanguage == LanguageE.English ? "The number you entered is too big." : "عدد وارد شده بیش از حد بزرگ است.",
+                    MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
             catch (FormatException)
             {
-                DisplayAlert("Error", "Invalid number format. Number must be a natural number.", "OK");
+                DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                    MainPage.SelectedLanguage == LanguageE.English ? "Invalid number format. Number must be a natural number." : "عدد وارد شده نامعتبر است. عدد باید عدد طبیعی باشد.",
+                    MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
             catch (Exception ex)
@@ -41,14 +54,36 @@ namespace Maths
             }
             if (Number < 2)
             {
-                DisplayAlert("Error", "Number cannot be less than 2.", "OK");
+                DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
+                    MainPage.SelectedLanguage == LanguageE.English ? "Number cannot be less than 2." : "عدد نمی تواند کمتر از 2 باشد.",
+                    MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
             ulong pTest = MathFunctions.CheckPrime(Number);
-            if (pTest == 1)
-                Result.Text = Number + " is prime.";
+            if (MainPage.SelectedLanguage == LanguageE.English)
+            {
+                if (pTest == 1)
+                    Result.Text = Number + " is prime.";
+                else
+                    Result.Text = Number + " is not prime. It can be divided by " + pTest;
+            }
             else
-                Result.Text = Number + " is not prime. It can be divided by " + pTest;
+            {
+                if (pTest == 1)
+                {
+                    Result.Text = "عدد ";
+                    Result.Text += Number;
+                    Result.Text += " اول است.";
+                }
+                else
+                {
+                    Result.Text = "عدد ";
+                    Result.Text += Number;
+                    Result.Text += " اول نیست. این عدد بر ";
+                    Result.Text += pTest;
+                    Result.Text += " بخش پذیر است.";
+                }
+            }
         }
     }
 }

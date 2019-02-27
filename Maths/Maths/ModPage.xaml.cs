@@ -12,6 +12,16 @@ namespace Maths
 		public ModPage ()
 		{
 			InitializeComponent ();
+            if(LanguageC.SavedLanguage() == LanguageE.Persian)
+            {
+                Title = "باقی مانده";
+                Info.Text = "مقسوم و مقسوم علیه را وارد کنید";
+                ModDividend.Placeholder = "مقسوم";
+                ModDivisor.Placeholder = "مقسوم علیه";
+                FindBTN.Text = "حساب کن";
+                Result.HorizontalOptions = new LayoutOptions(LayoutAlignment.End, true);
+                Result.HorizontalTextAlignment = TextAlignment.End;
+            }
 		}
 
         private void FindBTN_Clicked(object sender, EventArgs e)
@@ -31,7 +41,11 @@ namespace Maths
                 DisplayAlert("Error", "Numbers cannot be less than 1.", "OK");
                 return;
             }
-            Result.Text = "Reminder is " + (big1 % big2);
+            string res = (big1 % big2).ToString();
+            if (LanguageC.SavedLanguage() == LanguageE.English)
+                Result.Text = "Reminder is " + res;
+            else
+                Result.Text = "باقی مانده برابر است با " + res;
         }
     }
 }
