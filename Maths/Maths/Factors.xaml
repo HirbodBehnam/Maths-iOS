@@ -24,7 +24,7 @@
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
                     <StackLayout Orientation="Vertical" HeightRequest="150" WidthRequest="200" BackgroundColor="White">
                         <ActivityIndicator IsRunning="True" Margin="0,35,0,0" VerticalOptions="Center" HorizontalOptions="Center" Color="Black" WidthRequest="30" HeightRequest="30" />
-                        <Label x:Name="popupLabel" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" Text="Checking numbers..."/>
+                        <Label x:Name="popupLabel" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" Text="Calculating..."/>
                         <ProgressBar x:Name="popupProgress" Margin="10,5,10,0"/>
                     </StackLayout>
                 </StackLayout>

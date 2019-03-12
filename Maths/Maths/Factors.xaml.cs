@@ -25,6 +25,7 @@ namespace Maths
                 FactorsInput.Placeholder = "عدد را وارد کنید";
                 Result.HorizontalOptions = new LayoutOptions(LayoutAlignment.End, true);
                 Result.HorizontalTextAlignment = TextAlignment.End;
+                popupLabel.Text = "در حال محاسبه...";
             }
 		}
         private void Button_Clicked(object sender, EventArgs e)

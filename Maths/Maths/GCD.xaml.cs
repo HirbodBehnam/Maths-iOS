@@ -31,6 +31,7 @@ namespace Maths
                 LCMSwitchTXT.Text = "ک.م.م";
                 GCDSwitchTXT.Text = "ب.م.م";
                 EntryNumbers.Placeholder = "اعداد را وارد کنید";
+                popupLabel.Text = "در حال محاسبه...";
             }
         }
 
