@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +14,8 @@ namespace Maths
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PrimeCheck : ContentPage
 	{
+        private ulong TO = 0, i = 0;
+        private bool Done = false;
 		public PrimeCheck ()
 		{
 			InitializeComponent ();
@@ -23,12 +27,14 @@ namespace Maths
                 Result.HorizontalTextAlignment = TextAlignment.End;
                 InputEntry.Placeholder = "عدد را وارد کنید";
                 CheckBTN.Text = "چک کن";
+                popupLabel.Text = "در حال حساب";
             }
         }
+        
         private void FindBTN_Clicked(object sender, EventArgs e)
         {
-            ulong Number;
             //Get number from input
+            ulong Number;
             try
             {
                 Number = Convert.ToUInt64(InputEntry.Text);
@@ -59,31 +65,85 @@ namespace Maths
                     MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
-            ulong pTest = MathFunctions.CheckPrime(Number);
-            if (MainPage.SelectedLanguage == LanguageE.English)
+            Done = false;
+            i = 0; TO = 1;
+            popupLoadingView.IsVisible = true;
+            //setup main task
+            new Task(() =>
             {
-                if (pTest == 1)
-                    Result.Text = Number + " is prime.";
-                else
-                    Result.Text = Number + " is not prime. It can be divided by " + pTest;
-            }
-            else
+                ulong pTest = 1;
+                //Main prime checking algorithm
+                if (Number == 2 || Number == 3 || Number == 5 || Number == 7)
+                    goto END;
+                if (Number % 2 == 0)
+                {
+                    pTest = 2;
+                    goto END;
+                }
+                if (Number % 3 == 0)
+                {
+                    pTest = 3;
+                    goto END;
+                }
+                TO = (uint)Math.Sqrt(Number);
+                for (i = 5; i <= TO; i += 4)
+                {
+                    if (Number % i == 0)
+                    {
+                        pTest = i;
+                        goto END;
+                    }
+                    i += 2;
+                    if (Number % i == 0)
+                    {
+                        pTest = i;
+                        goto END;
+                    }
+                }
+            END:
+                Done = true;
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    if (MainPage.SelectedLanguage == LanguageE.English)
+                    {
+                        if (pTest == 1)
+                            Result.Text = Number + " is prime.";
+                        else
+                            Result.Text = Number + " is not prime. It can be divided by " + pTest;
+                    }
+                    else
+                    {
+                        if (pTest == 1)
+                        {
+                            Result.Text = "عدد ";
+                            Result.Text += Number;
+                            Result.Text += " اول است.";
+                        }
+                        else
+                        {
+                            Result.Text = "عدد ";
+                            Result.Text += Number;
+                            Result.Text += " اول نیست. این عدد بر ";
+                            Result.Text += pTest;
+                            Result.Text += " بخش پذیر است.";
+                        }
+                    }
+                    popupLoadingView.IsVisible = false;
+                });
+            }).Start();
+            //setup progress bar
+            new Task(() =>
             {
-                if (pTest == 1)
+                while (!Done)
                 {
-                    Result.Text = "عدد ";
-                    Result.Text += Number;
-                    Result.Text += " اول است.";
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        popupProgress.Progress = (double)i / TO;
+                    });
+                    Thread.Sleep(200);
                 }
-                else
-                {
-                    Result.Text = "عدد ";
-                    Result.Text += Number;
-                    Result.Text += " اول نیست. این عدد بر ";
-                    Result.Text += pTest;
-                    Result.Text += " بخش پذیر است.";
-                }
-            }
+            }).Start();
+            
         }
     }
 }

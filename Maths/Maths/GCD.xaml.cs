@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +14,8 @@ namespace Maths
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class GCD : ContentPage
 	{
+        private int i;
+        private bool Done = false;
 		public GCD ()
 		{
 			InitializeComponent ();
@@ -34,7 +38,7 @@ namespace Maths
         {
             ulong[] nums;
             {//Get the numbers
-                int i = 0;
+                i = 0;
                 string[] numbersSplitted = EntryNumbers.Text.Split(',');
                 nums = new ulong[numbersSplitted.Length];
                 try
@@ -83,28 +87,72 @@ namespace Maths
                     MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
+            Done = false;
+            popupLoadingView.IsVisible = true;
             if (LCMorGCDSwitch.IsToggled) //LCM
             {
-                BigInteger big = new BigInteger(nums[0]);
-                BigInteger numTemp;
-                for(int i = 1; i < nums.Length; i++)
+                i = 0;
+                //Main calculation
+                new Task(() =>
                 {
-                    numTemp = nums[i];
-                    big = (big / BigInteger.GreatestCommonDivisor(big, numTemp) * numTemp);
-                }
-                if(MainPage.SelectedLanguage == LanguageE.English)
-                    Result.Text = "The LCM is: " + big;
-                else
-                    Result.Text = "ک.م.م برابر است با " + big;
+                    BigInteger big = new BigInteger(nums[0]);
+                    BigInteger numTemp;
+                    for (i = 1; i < nums.Length; i++)
+                    {
+                        numTemp = nums[i];
+                        big = big / BigInteger.GreatestCommonDivisor(big, numTemp) * numTemp;
+                    }
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        if (MainPage.SelectedLanguage == LanguageE.English)
+                            Result.Text = "The LCM is: " + big;
+                        else
+                            Result.Text = "ک.م.م برابر است با " + big;
+                    });
+                    popupLoadingView.IsVisible = false;
+                }).Start();
+                //Progress report
+                new Task(() =>
+                {
+                    while (!Done)
+                    {
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            popupProgress.Progress = (double)i / nums.Length;
+                        });
+                        Thread.Sleep(200);
+                    }
+                }).Start();
             }
             else //GCD
             {
-                for(int i = nums.Length; i-- > 1;)
-                    nums[i - 1] = MathFunctions.GCD(nums[i - 1], nums[i]);
-                if (MainPage.SelectedLanguage == LanguageE.English)
-                    Result.Text = "The GCD is: " + nums[0];
-                else
-                    Result.Text = "ب.م.م برابر است با " + nums[0];
+                //Main calculation
+                new Task(() =>
+                {
+                    for (i = nums.Length; i-- > 1;)
+                        nums[i - 1] = MathFunctions.GCD(nums[i - 1], nums[i]);
+                    Done = true;
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        if (MainPage.SelectedLanguage == LanguageE.English)
+                            Result.Text = "The GCD is: " + nums[0];
+                        else
+                            Result.Text = "ب.م.م برابر است با " + nums[0];
+                    });
+                    popupLoadingView.IsVisible = false;
+                }).Start();
+                //Progress report
+                new Task(() =>
+                {
+                    while (!Done)
+                    {
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            popupProgress.Progress = 1d - ((double)i / nums.Length);
+                        });
+                        Thread.Sleep(200);
+                    }
+                }).Start();
             }
         }
     }

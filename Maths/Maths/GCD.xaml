@@ -3,39 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maths.GCD" Title="GCD &#38; LCM">
     <ContentPage.Content>
-        <StackLayout Padding="15">
-            <Label Text="Find GCD or LCM of a number. Enter numbers like: num1,num2,num3,num4,..."
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Padding="15" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Label Text="Find GCD or LCM of a number. Enter numbers like: num1,num2,num3,num4,..."
                    VerticalOptions="Start"
                    HorizontalTextAlignment="Center"
                    HorizontalOptions="CenterAndExpand" x:Name="Info"/>
-            <Entry HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                <Entry HorizontalOptions="FillAndExpand" VerticalOptions="Center"
                    Margin="10,0"
                    x:Name="EntryNumbers" Placeholder="Enter numbers"/>
-            <Grid Margin="0,10" HorizontalOptions="CenterAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label
-                    Margin="5"
-                    Text="LCM"
-                    HorizontalTextAlignment="Start"
-                    x:Name="LCMSwitchTXT"
-                    Grid.Column="2"/>
-                <Switch
-                    x:Name="LCMorGCDSwitch"
-                    Grid.Column="1"
+                <Grid Margin="0,10" HorizontalOptions="CenterAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Margin="5"
+                        Text="LCM"
+                        HorizontalTextAlignment="Start"
+                        x:Name="LCMSwitchTXT"
+                        Grid.Column="2"/>
+                    <Switch
+                        x:Name="LCMorGCDSwitch"
+                        Grid.Column="1"
                     />
-                <Label
-                    Margin="5"
-                    Text="GCD"
-                    x:Name="GCDSwitchTXT"
-                    HorizontalTextAlignment="End"
-                    Grid.Column="0"/>
-            </Grid>
-            <Button Text="Find" Clicked="Find_Clicked" x:Name="FindBTN"/>
-            <Label Margin="10,0" x:Name="Result"/>
-        </StackLayout>
+                    <Label
+                        Margin="5"
+                        Text="GCD"
+                        x:Name="GCDSwitchTXT"
+                        HorizontalTextAlignment="End"
+                        Grid.Column="0"/>
+                </Grid>
+                <Button Text="Find" Clicked="Find_Clicked" x:Name="FindBTN"/>
+                <Label Margin="10,0" x:Name="Result"/>
+            </StackLayout>
+            <ContentView x:Name="popupLoadingView" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <StackLayout Orientation="Vertical" HeightRequest="150" WidthRequest="200" BackgroundColor="White">
+                        <ActivityIndicator IsRunning="True" Margin="0,35,0,0" VerticalOptions="Center" HorizontalOptions="Center" Color="Black" WidthRequest="30" HeightRequest="30" />
+                        <Label x:Name="popupLabel" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" Text="Checking numbers..."/>
+                        <ProgressBar x:Name="popupProgress" Margin="10,5,10,0"/>
+                    </StackLayout>
+                </StackLayout>
+            </ContentView>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

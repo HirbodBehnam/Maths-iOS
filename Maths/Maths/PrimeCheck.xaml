@@ -3,13 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maths.PrimeCheck" Title="Prime Checker">
     <ContentPage.Content>
-        <StackLayout Padding="15">
-            <Label Text="Detects if a number is prime or not" HorizontalTextAlignment="Center" x:Name="Info"/>
-            <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Padding="15" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Label Text="Detects if a number is prime or not" HorizontalTextAlignment="Center" x:Name="Info"/>
+                <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
                    Placeholder="Enter number" x:Name="InputEntry"
                    Margin="10,10,10,0"/>
-            <Button Clicked="FindBTN_Clicked" Text="Check" x:Name="CheckBTN"/>
-            <Label x:Name="Result"/>
-        </StackLayout>
+                <Button Clicked="FindBTN_Clicked" Text="Check" x:Name="CheckBTN"/>
+                <Label x:Name="Result"/>
+            </StackLayout>
+            <ContentView x:Name="popupLoadingView" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <StackLayout Orientation="Vertical" HeightRequest="150" WidthRequest="200" BackgroundColor="White">
+                        <ActivityIndicator IsRunning="True" Margin="0,35,0,0" VerticalOptions="Center" HorizontalOptions="Center" Color="Black" WidthRequest="30" HeightRequest="30" />
+                        <Label x:Name="popupLabel" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" Text="Checking numbers..."/>
+                        <ProgressBar x:Name="popupProgress" Margin="10,5,10,0"/>
+                    </StackLayout>
+                </StackLayout>
+            </ContentView>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

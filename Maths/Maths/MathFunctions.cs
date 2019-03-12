@@ -49,28 +49,5 @@ namespace Maths
             }
             return factorized.ToArray();
         }
-        /// <summary>
-        /// Checks if a number is prime. Returns 1 on prime numbers; Otherwise the first divisor is returned
-        /// </summary>
-        /// <param name="num">Number to check</param>
-        /// <returns></returns>
-        public static ulong CheckPrime(ulong number)
-        {
-            if (number == 2 || number == 3 || number == 5 || number == 7)
-                return 1;
-            if (number % 2 == 0)
-                return 2;
-            if (number % 3 == 0)
-                return 3;
-            ulong TO = (uint)Math.Sqrt(number);
-            for (ulong i = 5; i <= TO; i += 6)
-            {
-                if (number % i == 0)
-                    return i;
-                if (number % (i + 2) == 0)
-                    return i + 2;
-            }
-            return 1;
-        }
     }
 }
