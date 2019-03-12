@@ -62,9 +62,10 @@ namespace Maths
             new Task(() =>
             {
                 ulong[] array = MathFunctions.Factorize(Number);
-                string s = "<span style=\"font-size: 20px\">";
+                StringBuilder s = new StringBuilder("<span style=\"font-size: 20px\">");
                 { //Build the HTML code
-                    s += array[0] + "<sup><small>";
+                    s.Append(array[0]);
+                    s.Append("<sup><small>");
                     ulong index = 0;
                     ulong j = array[0];
                     foreach (ulong i in array)
@@ -73,19 +74,30 @@ namespace Maths
                         else
                         {
                             if (index != 1)
-                                s += index + "</small></sup>×" + i + "<sup><small>";
+                            {
+                                s.Append(index);
+                                s.Append("</small></sup>×");
+                                s.Append(i);
+                                s.Append("<sup><small>");
+                            }
                             else
                             {
-                                s = s.Substring(0, s.Length - 12);
-                                s += "×" + i + "<sup><small>";
+                                //s = s.Substring(0, s.Length - 12);
+                                s.Length = s.Length - 12;
+                                s.Append('×');
+                                s.Append(i);
+                                s.Append("<sup><small>");
                             }
                             index = 1;
                             j = i;
                         }
                     }
                     if (index != 1)
-                        s += index + "</small></sup>";
-                    s += "</span>";
+                    {
+                        s.Append(index);
+                        s.Append("</small></sup>");
+                    }
+                    s.Append("</span>");
                 }
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
@@ -105,7 +117,7 @@ namespace Maths
                     catch (Exception) { }
                     var browser = new WebView
                     {
-                        Source = new HtmlWebViewSource() { Html = s },
+                        Source = new HtmlWebViewSource() { Html = s.ToString() },
                         HorizontalOptions = LayoutOptions.FillAndExpand,
                         VerticalOptions = LayoutOptions.FillAndExpand,
                         Margin = new Thickness(10, 0)
