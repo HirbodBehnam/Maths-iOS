@@ -41,7 +41,21 @@ namespace Maths
                 DisplayAlert("Error", "Numbers cannot be less than 1.", "OK");
                 return;
             }
-            string res = (big1 % big2).ToString();
+            big1 %= big2; //Now big1 is mod
+            string res = big1.ToString();
+            if (big1 > (big2 / 2))
+            {
+                big1 -= big2;
+                res += " ( ";
+                if (LanguageC.SavedLanguage() == LanguageE.English)
+                    res += big1.ToString();
+                else
+                {
+                    big1 = -big1;
+                    res += big1.ToString() + "-";
+                }
+                res += " )";
+            }
             if (LanguageC.SavedLanguage() == LanguageE.English)
                 Result.Text = "Reminder is " + res;
             else
