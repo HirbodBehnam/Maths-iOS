@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Text;
 
 namespace Maths
 {
@@ -24,7 +25,7 @@ namespace Maths
         /// Sets the maximum precision of division operations.
         /// If AlwaysTruncate is set to true all operations are affected.
         /// </summary>
-        public static int Precision = 50;
+        public static int Precision = 15;
 
         public BigInteger Mantissa { get; set; }
         public int Exponent { get; set; }
@@ -298,7 +299,18 @@ namespace Maths
 
         public override string ToString()
         {
-            return string.Concat(Mantissa.ToString(), "E", Exponent);
+            StringBuilder s = new StringBuilder(Mantissa.ToString());
+            //Can exponent be more than 0? I don't know
+            if (Exponent > 0)
+            {
+                for (int i = 0; i < Exponent; i++)
+                    s.Append('0');
+            }
+            else if(Exponent < 0)
+            {
+                s.Insert(s.Length + Exponent, '.');
+            }
+            return s.ToString();
         }
 
         public bool Equals(BigDecimal other)
