@@ -191,4 +191,7 @@
       <Version>3.6.0.220655</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\delete.png" />
+  </ItemGroup>
 </Project>

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,7 +21,7 @@ namespace Maths
                 Title = "میانگین گیر";
                 Info.Text = "لطفا اعداد را یکی یکی وارد کنید.";
                 FindBTN.Text = "اضافه کن";
-                Input.Placeholder = "عدد را وارد کنید.";
+                Input.Placeholder = "عدد را وارد کنید";
             }
             Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
             ResultList.ItemsSource = ListAdaptor;
@@ -62,12 +58,13 @@ namespace Maths
             SetPrecision();
             //Update result
             Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + (sum / (double)NumbersCount).ToString();
+            Input.Text = "";
         }
         private void SetPrecision() => BigDecimal.Precision = sum.ToString().Length + 15;
         private async void ResultList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             string action = await DisplayActionSheet(MainPage.SelectedLanguage == LanguageE.Persian ? "آیا مایلید که عدد " + e.Item.ToString() + " را پاک کنید؟" : "Delete the number " + e.Item.ToString() + "?", MainPage.SelectedLanguage == LanguageE.Persian ? "بیخیال" : "Cancel", MainPage.SelectedLanguage == LanguageE.Persian ? "پاک کن" : "Delete");
-            if(action == "Delete")
+            if(action == "Delete" || action == "پاک کن")
             {
                 NumbersCount--;
                 sum -= Convert.ToDouble(e.Item.ToString());
@@ -78,6 +75,22 @@ namespace Maths
                 else
                     Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
             }
+        }
+
+        private async void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            if (!Preferences.ContainsKey("AverageCalculatorDeleteInfoShowed"))
+            {
+                if (MainPage.SelectedLanguage == LanguageE.Persian)
+                    await DisplayAlert("توجه", "برای پاک کردن تنها یک عدد آن عدد را روی لیست انتخاب کنید.", "باشه");
+                else
+                    await DisplayAlert("Note", "If you want to delete only one number, choose that number from list.", "OK");
+                Preferences.Set("AverageCalculatorDeleteInfoShowed", true);
+            }
+            sum = 0;
+            NumbersCount = 0;
+            ListAdaptor.Clear();
+            Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
         }
     }
 }

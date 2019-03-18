@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maths.AverageCalculator"
              Title="Average Calculator">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="delete.png" Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Label Text="Enter numbers one by one."
