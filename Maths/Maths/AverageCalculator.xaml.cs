@@ -20,6 +20,13 @@ namespace Maths
         public AverageCalculator()
         {
             InitializeComponent();
+            if (MainPage.SelectedLanguage == LanguageE.Persian)
+            {
+                Title = "میانگین گیر";
+                Info.Text = "لطفا اعداد را یکی یکی وارد کنید.";
+                FindBTN.Text = "اضافه کن";
+                Input.Placeholder = "عدد را وارد کنید.";
+            }
             Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
             ResultList.ItemsSource = ListAdaptor;
         }
@@ -59,7 +66,7 @@ namespace Maths
         private void SetPrecision() => BigDecimal.Precision = sum.ToString().Length + 15;
         private async void ResultList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            string action = await DisplayActionSheet("Delete the number " + e.Item.ToString() + "?", "Cancel", "Delete");
+            string action = await DisplayActionSheet(MainPage.SelectedLanguage == LanguageE.Persian ? "آیا مایلید که عدد " + e.Item.ToString() + " را پاک کنید؟" : "Delete the number " + e.Item.ToString() + "?", MainPage.SelectedLanguage == LanguageE.Persian ? "بیخیال" : "Cancel", MainPage.SelectedLanguage == LanguageE.Persian ? "پاک کن" : "Delete");
             if(action == "Delete")
             {
                 NumbersCount--;
