@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -13,18 +14,21 @@ namespace Maths
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AverageCalculator : ContentPage
     {
+        ObservableCollection<StringInList> ListAdaptor = new ObservableCollection<StringInList>();
         BigDecimal sum = 0;
         uint NumbersCount = 0;
         public AverageCalculator()
         {
             InitializeComponent();
+            Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
+            ResultList.ItemsSource = ListAdaptor;
         }
         private void Button_Clicked(object sender, EventArgs e)
         {
-            double Num;
+            decimal Num;
             try
             {
-                Num = double.Parse(Input.Text);
+                Num = decimal.Parse(Input.Text);
             }
             catch (OverflowException)
             {
@@ -45,15 +49,28 @@ namespace Maths
                 DisplayAlert("Unhandled Exception", ex.ToString(), "OK");
                 return;
             }
+            ListAdaptor.Add(new StringInList() { ListString = Num.ToString() });
             sum += Num;
             NumbersCount++;
+            SetPrecision();
             //Update result
             Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + (sum / (double)NumbersCount).ToString();
         }
-
-        private void ResultList_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void SetPrecision() => BigDecimal.Precision = sum.ToString().Length + 15;
+        private async void ResultList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            
+            string action = await DisplayActionSheet("Delete the number " + e.Item.ToString() + "?", "Cancel", "Delete");
+            if(action == "Delete")
+            {
+                NumbersCount--;
+                sum -= Convert.ToDouble(e.Item.ToString());
+                ListAdaptor.RemoveAt(e.ItemIndex);
+                SetPrecision();
+                if (NumbersCount > 0)
+                    Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + (sum / (double)NumbersCount).ToString();
+                else
+                    Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
+            }
         }
     }
 }
