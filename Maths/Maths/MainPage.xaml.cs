@@ -18,7 +18,8 @@ namespace Maths
             { "Factorize","Factorize a number to prime factors" },
             { "Mod","Find remainder of division of two numbers" },
             { "GCD and LCM","Find greatest common divisor or least common multiple of two numbers" },
-            { "Prime Checker","Detects if a number is prime or not" }
+            { "Prime Checker","Detects if a number is prime or not" },
+            { "Average Calculator","Find average of some numbers" }
         };
         public static readonly Dictionary<string, string> MenuPersianItems = new Dictionary<string, string>()
         {
@@ -26,7 +27,8 @@ namespace Maths
             { "ب.م.م و ک.م.م","بزرگ ترین مقسوم علیه مشترک و کوچکترین مضرب مشترک" },
             { "باقی مانده","پیدا کردن باقی مانده ی دو عدد" },
             { "تشخیص عدد اول","تشخیص دادن اینکه عددی اول است یا نه" },
-            { "تجزیه","یک عدد را به عوامل اول تجزیه می کند" } 
+            { "تجزیه","یک عدد را به عوامل اول تجزیه می کند" },
+            { "میانگین گیر","حساب کردن میانگین چندین عدد" }
         };
         public static LanguageE SelectedLanguage = LanguageE.English;
         public MainPage()
@@ -99,6 +101,10 @@ namespace Maths
                 case "Prime Checker":
                 case "تشخیص عدد اول":
                     Navigation.PushAsync(new PrimeCheck());
+                    break;
+                case "Average Calculator":
+                case "میانگین گیر":
+                    Navigation.PushAsync(new AverageCalculator());
                     break;
             }
         }

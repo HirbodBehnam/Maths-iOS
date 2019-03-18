@@ -50,4 +50,15 @@ namespace Maths
             return factorized.ToArray();
         }
     }
+    /// <summary>
+    /// This class is used for single cell list views
+    /// </summary>
+    public class StringInList
+    {
+        public string ListString { get; set; }
+        public override string ToString()
+        {
+            return ListString;
+        }
+    }
 }

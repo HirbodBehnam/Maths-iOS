@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maths.AverageCalculator">
+    <ContentPage.Content>
+        <StackLayout Padding="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label Text="Enter numbers one by one."
+                HorizontalOptions="CenterAndExpand" x:Name="Info" />
+            <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
+                   Placeholder="Enter number" x:Name="Input"
+                   Margin="10,10,10,0"/>
+            <Button Text="Add" HorizontalOptions="Center" Clicked="Button_Clicked" x:Name="FindBTN"/>
+            <Label x:Name="Result" Margin="10,0,0,0"/>
+            <ListView x:Name="ResultList" ItemTapped="ResultList_ItemTapped" SelectionMode="None" Margin="0,0,18,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding ListString}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

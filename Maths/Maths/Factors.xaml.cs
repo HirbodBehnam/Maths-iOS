@@ -109,8 +109,4 @@ namespace Maths
             }).Start();
         }
     }
-    public class StringInList
-    {
-        public string ListString { get; set; }
-    }
 }
