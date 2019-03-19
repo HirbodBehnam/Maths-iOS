@@ -26,6 +26,23 @@ namespace Maths
             Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
             ResultList.ItemsSource = ListAdaptor;
         }
+        public void OnDelete(object sender, EventArgs e)
+        {
+            MenuItem mi = (MenuItem)sender;
+            NumbersCount--;
+            sum -= Convert.ToDecimal(mi.CommandParameter.ToString());
+            for(int i = 0;i<ListAdaptor.Count;i++)
+                if(ListAdaptor[i].ListString == mi.CommandParameter.ToString())
+                {
+                    ListAdaptor.RemoveAt(i);
+                    break;
+                }
+            SetPrecision();
+            if (NumbersCount > 0)
+                Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + (sum / (double)NumbersCount).ToString();
+            else
+                Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
+        }
         private void Button_Clicked(object sender, EventArgs e)
         {
             decimal Num;
@@ -61,21 +78,6 @@ namespace Maths
             Input.Text = "";
         }
         private void SetPrecision() => BigDecimal.Precision = sum.ToString().Length + 15;
-        private async void ResultList_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            string action = await DisplayActionSheet(MainPage.SelectedLanguage == LanguageE.Persian ? "آیا مایلید که عدد " + e.Item.ToString() + " را پاک کنید؟" : "Delete the number " + e.Item.ToString() + "?", MainPage.SelectedLanguage == LanguageE.Persian ? "بیخیال" : "Cancel", MainPage.SelectedLanguage == LanguageE.Persian ? "پاک کن" : "Delete");
-            if(action == "Delete" || action == "پاک کن")
-            {
-                NumbersCount--;
-                sum -= Convert.ToDouble(e.Item.ToString());
-                ListAdaptor.RemoveAt(e.ItemIndex);
-                SetPrecision();
-                if (NumbersCount > 0)
-                    Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + (sum / (double)NumbersCount).ToString();
-                else
-                    Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
-            }
-        }
 
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {

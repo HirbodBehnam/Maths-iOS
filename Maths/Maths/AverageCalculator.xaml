@@ -15,10 +15,15 @@
                    Margin="10,10,10,0"/>
             <Button Text="Add" HorizontalOptions="Center" Clicked="Button_Clicked" x:Name="FindBTN"/>
             <Label x:Name="Result" Margin="10,0,0,0"/>
-            <ListView x:Name="ResultList" ItemTapped="ResultList_ItemTapped" SelectionMode="None" Margin="0,0,18,0">
+            <ListView x:Name="ResultList" SelectionMode="None" Margin="0,0,18,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding ListString}" />
+                        <TextCell Text="{Binding ListString}" >
+                            <TextCell.ContextActions>
+                                <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
+                                    Text="Delete" IsDestructive="True" />
+                            </TextCell.ContextActions>
+                        </TextCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
