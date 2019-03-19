@@ -10,9 +10,10 @@ namespace Maths
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AverageCalculator : ContentPage
     {
-        ObservableCollection<StringInList> ListAdaptor = new ObservableCollection<StringInList>();
-        BigDecimal sum = 0;
-        uint NumbersCount = 0;
+        private ObservableCollection<StringInListWithID> ListAdaptor = new ObservableCollection<StringInListWithID>();
+        private BigDecimal sum = 0;
+        private uint NumbersCount = 0;
+        private ulong IDCounterListItems = 0;
         public AverageCalculator()
         {
             InitializeComponent();
@@ -28,11 +29,11 @@ namespace Maths
         }
         public void OnDelete(object sender, EventArgs e)
         {
-            MenuItem mi = (MenuItem)sender;
+            StringInListWithID mi = (StringInListWithID)((MenuItem)sender).CommandParameter;
             NumbersCount--;
-            sum -= Convert.ToDecimal(mi.CommandParameter.ToString());
+            sum -= Convert.ToDecimal(mi.ToString());
             for(int i = 0;i<ListAdaptor.Count;i++)
-                if(ListAdaptor[i].ListString == mi.CommandParameter.ToString())
+                if(ListAdaptor[i].ID == mi.ID)
                 {
                     ListAdaptor.RemoveAt(i);
                     break;
@@ -69,7 +70,7 @@ namespace Maths
                 DisplayAlert("Unhandled Exception", ex.ToString(), "OK");
                 return;
             }
-            ListAdaptor.Add(new StringInList() { ListString = Num.ToString() });
+            ListAdaptor.Add(new StringInListWithID() { ListString = Num.ToString(),ID = IDCounterListItems++ });
             sum += Num;
             NumbersCount++;
             SetPrecision();
@@ -84,15 +85,22 @@ namespace Maths
             if (!Preferences.ContainsKey("AverageCalculatorDeleteInfoShowed"))
             {
                 if (MainPage.SelectedLanguage == LanguageE.Persian)
-                    await DisplayAlert("توجه", "برای پاک کردن تنها یک عدد آن عدد را روی لیست انتخاب کنید.", "باشه");
+                    await DisplayAlert("توجه", "برای پاک کردن تنها یک عدد آن عدد را روی لیست به سمت چپ بکشید." + "\n" + "در صورتی که می خواهید کل اعداد را پاک کنید این آیکون را یکبار دیگر انتخاب کنید. ", "باشه");
                 else
-                    await DisplayAlert("Note", "If you want to delete only one number, choose that number from list.", "OK");
+                    await DisplayAlert("Note", "If you want to delete only one number, slide that number to left from list.\nIf you want to delete all numbers, select this icon again.", "OK");
                 Preferences.Set("AverageCalculatorDeleteInfoShowed", true);
+                return;
             }
             sum = 0;
             NumbersCount = 0;
             ListAdaptor.Clear();
             Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
+        }
+        private class StringInListWithID
+        {
+            public string ListString { get; set; }
+            public ulong ID { get; set; }
+            public override string ToString() => ListString;
         }
     }
 }

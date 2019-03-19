@@ -56,9 +56,6 @@ namespace Maths
     public class StringInList
     {
         public string ListString { get; set; }
-        public override string ToString()
-        {
-            return ListString;
-        }
+        public override string ToString() => ListString;
     }
 }
