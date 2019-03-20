@@ -12,8 +12,8 @@
             <Label Text="Enter numbers one by one."
                 HorizontalOptions="CenterAndExpand" x:Name="Info" />
             <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
-                   Placeholder="Enter number" x:Name="Input"
-                   Margin="10,10,10,0"/>
+                   Placeholder="Enter number" x:Name="Input" ReturnType="Done"
+                   Margin="10,10,10,0" Completed="Input_Completed"/>
             <Button Text="Add" HorizontalOptions="Center" Clicked="Button_Clicked" x:Name="FindBTN"/>
             <Label x:Name="Result" Margin="10,0,0,0"/>
             <ListView x:Name="ResultList" SelectionMode="None" Margin="0,0,18,0">

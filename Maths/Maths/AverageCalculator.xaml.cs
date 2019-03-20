@@ -124,5 +124,11 @@ namespace Maths
             public ulong ID { get; set; }
             public override string ToString() => ListString;
         }
+
+        private void Input_Completed(object sender, EventArgs e)
+        {
+            Button_Clicked(null, null);
+            Input.Focus();
+        }
     }
 }
