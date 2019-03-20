@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -62,67 +63,36 @@ namespace Maths
             new Task(() =>
             {
                 ulong[] array = MathFunctions.Factorize(Number);
-                StringBuilder s = new StringBuilder("<span style=\"font-size: 20px\">");
-                { //Build the HTML code
-                    s.Append(array[0]);
-                    s.Append("<sup><small>");
-                    ulong index = 0;
-                    ulong j = array[0];
-                    foreach (ulong i in array)
+                Dictionary<string, string> numberOfOccurring = new Dictionary<string, string>();
+                {//Count Occurring
+                    int Occurr = 0;
+                    ulong Now = array[0];
+                    foreach(ulong i in array)
                     {
-                        if (j == i) index++;
-                        else
+                        if(Now != i)
                         {
-                            if (index != 1)
-                            {
-                                s.Append(index);
-                                s.Append("</small></sup>×");
-                                s.Append(i);
-                                s.Append("<sup><small>");
-                            }
-                            else
-                            {
-                                //s = s.Substring(0, s.Length - 12);
-                                s.Length = s.Length - 12;
-                                s.Append('×');
-                                s.Append(i);
-                                s.Append("<sup><small>");
-                            }
-                            index = 1;
-                            j = i;
+                            numberOfOccurring.Add(Now.ToString(), Occurr.ToString());
+                            Now = i;
+                            Occurr = 0;
                         }
+                        Occurr++;
                     }
-                    if (index != 1)
-                    {
-                        s.Append(index);
-                        s.Append("</small></sup>");
-                    }
-                    s.Append("</span>");
+                    numberOfOccurring.Add(Now.ToString(), Occurr.ToString());
                 }
+                char[] SuperScripts = new char[] { '⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹' };
+                StringBuilder sb = new StringBuilder();
+                foreach(var i in numberOfOccurring)
+                {
+                    sb.Append(i.Key);
+                    if(i.Value != "1")
+                        foreach(char c in i.Value)
+                            sb.Append(SuperScripts[Convert.ToInt32(c.ToString())]);
+                    sb.Append(" × ");
+                }
+                sb.Length -= 2;
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    /*
-                    * About how I print the results.
-                    * This a little bit stupid cause I have to remove and add another
-                    * web view in order to make the content visible. I searched the
-                    * net and read about bindings and other stuff but none of them
-                    * worked. This is a little bit safer way to show the results but
-                    * it have to create another web view every time it factorizes a
-                    * number.
-                    */
-                    try
-                    {
-                        StackResult.Children.RemoveAt(0);
-                    }
-                    catch (Exception) { }
-                    var browser = new WebView
-                    {
-                        Source = new HtmlWebViewSource() { Html = s.ToString() },
-                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                        VerticalOptions = LayoutOptions.FillAndExpand,
-                        Margin = new Thickness(10, 0)
-                    };
-                    StackResult.Children.Add(browser);
+                    ResultLabel.Text = sb.ToString();
                     popupLoadingView.IsVisible = false;
                 });
             }).Start();  

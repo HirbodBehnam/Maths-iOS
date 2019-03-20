@@ -10,8 +10,7 @@
                    Placeholder="Enter number" x:Name="InputEntry"
                    Margin="10,10,10,0"/>
                 <Button Clicked="FindBTN_Clicked" Text="Find" x:Name="FindBTN"/>
-                <StackLayout x:Name="StackResult" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                </StackLayout>
+                <Label FontSize="Large" x:Name="ResultLabel"/>
             </StackLayout>
             <ContentView x:Name="popupLoadingView" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
