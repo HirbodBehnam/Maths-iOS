@@ -11,6 +11,7 @@ namespace Maths
     public partial class AverageCalculator : ContentPage
     {
         private ObservableCollection<StringInListWithID> ListAdaptor = new ObservableCollection<StringInListWithID>();
+        private string AverageRes = "0";
         private BigDecimal sum = 0;
         private uint NumbersCount = 0;
         private ulong IDCounterListItems = 0;
@@ -40,9 +41,15 @@ namespace Maths
                 }
             SetPrecision();
             if (NumbersCount > 0)
-                Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + (sum / (double)NumbersCount).ToString();
+            {
+                AverageRes = (sum / (double)NumbersCount).ToString();
+                Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + AverageRes;
+            }
             else
+            {
+                AverageRes = "0";
                 Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
+            }
         }
         private void Button_Clicked(object sender, EventArgs e)
         {
@@ -74,8 +81,9 @@ namespace Maths
             sum += Num;
             NumbersCount++;
             SetPrecision();
+            AverageRes = (sum / (double)NumbersCount).ToString();
             //Update result
-            Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + (sum / (double)NumbersCount).ToString();
+            Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + AverageRes;
             Input.Text = "";
         }
         private void SetPrecision() => BigDecimal.Precision = sum.ToString().Length + 15;
@@ -95,6 +103,11 @@ namespace Maths
             NumbersCount = 0;
             ListAdaptor.Clear();
             Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
+        }
+        private async void ToolbarItemCopy_Clicked(object sender, EventArgs e)
+        {
+            Vibration.Vibrate(100);
+            await Clipboard.SetTextAsync(AverageRes);
         }
         private class StringInListWithID
         {

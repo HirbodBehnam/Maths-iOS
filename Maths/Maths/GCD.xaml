@@ -2,6 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maths.GCD" Title="GCD &#38; LCM">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="copy.png" Clicked="ToolbarItemCopy_Clicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout Padding="15" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">

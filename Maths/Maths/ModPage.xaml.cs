@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Numerics;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,6 +9,7 @@ namespace Maths
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ModPage : ContentPage
 	{
+        private string Res = "0";
 		public ModPage ()
 		{
 			InitializeComponent ();
@@ -42,24 +43,29 @@ namespace Maths
                 return;
             }
             big1 %= big2; //Now big1 is mod
-            string res = big1.ToString();
+            Res = big1.ToString();
             if (big1 > (big2 / 2))
             {
                 big1 -= big2;
-                res += " ( ";
+                Res += " ( ";
                 if (LanguageC.SavedLanguage() == LanguageE.English)
-                    res += big1.ToString();
+                    Res += big1.ToString();
                 else
                 {
                     big1 = -big1;
-                    res += big1.ToString() + "-";
+                    Res += big1.ToString() + "-";
                 }
-                res += " )";
+                Res += " )";
             }
             if (LanguageC.SavedLanguage() == LanguageE.English)
-                Result.Text = "Reminder is " + res;
+                Result.Text = "Reminder is " + Res;
             else
-                Result.Text = "باقی مانده برابر است با " + res;
+                Result.Text = "باقی مانده برابر است با " + Res;
+        }
+        private async void ToolbarItemCopy_Clicked(object sender, EventArgs e)
+        {
+            Vibration.Vibrate(100);
+            await Clipboard.SetTextAsync(Res);
         }
     }
 }

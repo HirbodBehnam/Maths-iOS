@@ -194,4 +194,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\delete.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\copy.png" />
+  </ItemGroup>
 </Project>

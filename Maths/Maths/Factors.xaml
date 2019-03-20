@@ -15,7 +15,12 @@
                 <ListView x:Name="ResultList" Margin="0,0,18,0" SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding ListString}" />
+                            <TextCell Text="{Binding ListString}" >
+                                <TextCell.ContextActions>
+                                    <MenuItem Clicked="OnCopy" CommandParameter="{Binding .}"
+                                    Text="Copy" />
+                                </TextCell.ContextActions>
+                            </TextCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +12,7 @@ namespace Maths
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class GCD : ContentPage
 	{
+        private string Res = "0";
         private int i;
         private bool Done = false;
 		public GCD ()
@@ -105,10 +104,11 @@ namespace Maths
                     }
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
+                        Res = big.ToString();
                         if (MainPage.SelectedLanguage == LanguageE.English)
-                            Result.Text = "The LCM is: " + big;
+                            Result.Text = "The LCM is: " + Res;
                         else
-                            Result.Text = "ک.م.م برابر است با " + big;
+                            Result.Text = "ک.م.م برابر است با " + Res;
                     });
                     popupLoadingView.IsVisible = false;
                 }).Start();
@@ -135,10 +135,11 @@ namespace Maths
                     Done = true;
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
+                        Res = nums[0].ToString();
                         if (MainPage.SelectedLanguage == LanguageE.English)
-                            Result.Text = "The GCD is: " + nums[0];
+                            Result.Text = "The GCD is: " + Res;
                         else
-                            Result.Text = "ب.م.م برابر است با " + nums[0];
+                            Result.Text = "ب.م.م برابر است با " + Res;
                     });
                     popupLoadingView.IsVisible = false;
                 }).Start();
@@ -155,6 +156,11 @@ namespace Maths
                     }
                 }).Start();
             }
+        }
+        private async void ToolbarItemCopy_Clicked(object sender, EventArgs e)
+        {
+            Vibration.Vibrate(100);
+            await Clipboard.SetTextAsync(Res);
         }
     }
 }

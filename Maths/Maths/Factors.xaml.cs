@@ -28,6 +28,12 @@ namespace Maths
                 popupLabel.Text = "در حال محاسبه...";
             }
 		}
+        public async void OnCopy(object sender, EventArgs e)
+        {
+            StringInList mi = (StringInList)((MenuItem)sender).CommandParameter;
+            Vibration.Vibrate(100);
+            await Clipboard.SetTextAsync(mi.ListString);
+        }
         private void Button_Clicked(object sender, EventArgs e)
         {
             ulong Number;

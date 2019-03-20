@@ -5,6 +5,7 @@
              Title="Average Calculator">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="delete.png" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Icon="copy.png" Clicked="ToolbarItemCopy_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="15" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
