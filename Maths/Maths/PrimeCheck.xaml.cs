@@ -30,7 +30,12 @@ namespace Maths
                 popupLabel.Text = "در حال حساب";
             }
         }
-        
+
+        private void InputEntry_Completed(object sender, EventArgs e)
+        {
+            FindBTN_Clicked(null, null);
+        }
+
         private void FindBTN_Clicked(object sender, EventArgs e)
         {
             //Get number from input

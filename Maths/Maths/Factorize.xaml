@@ -6,8 +6,8 @@
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout Padding="15" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <Label Text="Factorize a number to prime factors." HorizontalTextAlignment="Center" x:Name="Info"/>
-                <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric"
-                   Placeholder="Enter number" x:Name="InputEntry"
+                <Entry HorizontalOptions="FillAndExpand" Keyboard="Numeric" ReturnType="Done"
+                   Placeholder="Enter number" x:Name="InputEntry" Completed="InputEntry_Completed"
                    Margin="10,10,10,0"/>
                 <Button Clicked="FindBTN_Clicked" Text="Find" x:Name="FindBTN"/>
                 <Label FontSize="Large" x:Name="ResultLabel"/>

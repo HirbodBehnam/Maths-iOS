@@ -97,5 +97,10 @@ namespace Maths
                 });
             }).Start();  
         }
+
+        private void InputEntry_Completed(object sender, EventArgs e)
+        {
+            FindBTN_Clicked(null, null);
+        }
     }
 }

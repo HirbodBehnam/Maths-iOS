@@ -114,5 +114,10 @@ namespace Maths
                 }
             }).Start();
         }
+
+        private void FactorsInput_Completed(object sender, EventArgs e)
+        {
+            Button_Clicked(null, null);
+        }
     }
 }

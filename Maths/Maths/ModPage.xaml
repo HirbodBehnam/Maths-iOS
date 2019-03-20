@@ -9,10 +9,10 @@
         <StackLayout Padding="15">
             <Label Text="Enter dividend and divisor."
                 HorizontalOptions="CenterAndExpand" x:Name="Info" />
-            <Entry x:Name="ModDividend" Keyboard="Numeric" 
-                   Placeholder="Enter dividend" Margin="10,10,10,0"/>
-            <Entry x:Name="ModDivisor" Keyboard="Numeric" 
-                   Placeholder="Enter divisor" Margin="10,0"/>
+            <Entry x:Name="ModDividend" Keyboard="Numeric" ReturnType="Next"
+                   Placeholder="Enter dividend" Margin="10,10,10,0" Completed="ModDividend_Completed"/>
+            <Entry x:Name="ModDivisor" Keyboard="Numeric" ReturnType="Done"
+                   Placeholder="Enter divisor" Margin="10,0" Completed="ModDivisor_Completed"/>
             <Button Text="Find" Clicked="FindBTN_Clicked" x:Name="FindBTN"/>
             <Label x:Name="Result"/>
         </StackLayout>

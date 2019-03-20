@@ -109,9 +109,18 @@ namespace Maths
             Vibration.Vibrate(100);
             await Clipboard.SetTextAsync(AverageRes);
         }
+        /// <summary>
+        /// This is exactly <see cref="StringInList"/> but also with an ID parameter
+        /// </summary>
         private class StringInListWithID
         {
+            /// <summary>
+            /// String to show in list
+            /// </summary>
             public string ListString { get; set; }
+            /// <summary>
+            /// ID of string
+            /// </summary>
             public ulong ID { get; set; }
             public override string ToString() => ListString;
         }

@@ -67,5 +67,15 @@ namespace Maths
             Vibration.Vibrate(100);
             await Clipboard.SetTextAsync(Res);
         }
+
+        private void ModDividend_Completed(object sender, EventArgs e)
+        {
+            ModDivisor.Focus();
+        }
+
+        private void ModDivisor_Completed(object sender, EventArgs e)
+        {
+            FindBTN_Clicked(null, null);
+        }
     }
 }

@@ -162,5 +162,10 @@ namespace Maths
             Vibration.Vibrate(100);
             await Clipboard.SetTextAsync(Res);
         }
+
+        private void EntryNumbers_Completed(object sender, EventArgs e)
+        {
+            Find_Clicked(null, null);
+        }
     }
 }
