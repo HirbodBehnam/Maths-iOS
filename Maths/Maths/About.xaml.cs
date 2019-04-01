@@ -18,7 +18,7 @@ namespace Maths
 		{
             InitializeComponent ();
             VersionInfo.Text = "Version " + VersionTracking.CurrentVersion + " Build Number: " + VersionTracking.CurrentBuild;
-		}
+        }
 
         private void AndroidButton_Clicked(object sender, EventArgs e)
         {

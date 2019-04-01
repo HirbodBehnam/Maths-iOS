@@ -12,14 +12,15 @@ namespace Maths
 {
     public partial class MainPage : ContentPage
     {
-        public static readonly Dictionary<string, string> MenuEnglishItems = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> MenuEnglishItems = new Dictionary<string, string>
         {
             { "Factors","Find factors of a number; 6-> 1,2,3,6" },
             { "Factorize","Factorize a number to prime factors" },
             { "Mod","Find remainder of division of two numbers" },
             { "GCD and LCM","Find greatest common divisor or least common multiple of two numbers" },
             { "Prime Checker","Detects if a number is prime or not" },
-            { "Average Calculator","Find average of some numbers" }
+            { "Average Calculator","Find average of some numbers" },
+            { "Quadratic Equation Solver","Solves a quadratic equation"}
         };
         public static readonly Dictionary<string, string> MenuPersianItems = new Dictionary<string, string>()
         {
@@ -28,7 +29,8 @@ namespace Maths
             { "باقی مانده","پیدا کردن باقی مانده ی دو عدد" },
             { "تشخیص عدد اول","تشخیص دادن اینکه عددی اول است یا نه" },
             { "تجزیه","یک عدد را به عوامل اول تجزیه می کند" },
-            { "میانگین گیر","حساب کردن میانگین چندین عدد" }
+            { "میانگین گیر","حساب کردن میانگین چندین عدد" },
+            {"معادله درجه دو","حل کردن و پیدا کردن ریشه های یک معادله ی درجه دو"}
         };
         public static LanguageE SelectedLanguage = LanguageE.English;
         public MainPage()
@@ -40,10 +42,10 @@ namespace Maths
             {
                 try
                 {
-                    string URL = "https://hirbodbehnam.github.io//ios_updater.html";
+                    const string url = "https://hirbodbehnam.github.io//ios_updater.html";
                     using (WebClient client = new WebClient()) 
                     {
-                        int remoteBuild = int.Parse(client.DownloadString(URL));
+                        int remoteBuild = int.Parse(client.DownloadString(url));
                         int localBuild = int.Parse(VersionTracking.CurrentBuild);
                         if (remoteBuild > localBuild)
                         {
@@ -60,20 +62,20 @@ namespace Maths
                 }
             }).Start();
             {//Setup main menu
-                ObservableCollection<MenuItems> Menu = new ObservableCollection<MenuItems>();
+                ObservableCollection<MenuItems> menu = new ObservableCollection<MenuItems>();
                 if (SelectedLanguage == LanguageE.English)
                 {
                     foreach (KeyValuePair<string, string> function in MenuEnglishItems.OrderBy(key => key.Key))
-                        Menu.Add(new MenuItems() { Title = function.Key, Info = function.Value });
+                        menu.Add(new MenuItems { Title = function.Key, Info = function.Value });
                     MainList.ItemTemplate = new DataTemplate(typeof(CustomCellLTR));
                 }
                 else
                 {
                     foreach (KeyValuePair<string, string> function in MenuPersianItems.OrderBy(key => key.Key))
-                        Menu.Add(new MenuItems() { Title = function.Key, Info = function.Value });
+                        menu.Add(new MenuItems { Title = function.Key, Info = function.Value });
                     MainList.ItemTemplate = new DataTemplate(typeof(CustomCellRTL));
                 }
-                MainList.ItemsSource = Menu;
+                MainList.ItemsSource = menu;
                 MainList.ItemTapped += ListView_ItemTapped;
                 MainList.SelectionMode = ListViewSelectionMode.None;
             }
@@ -106,16 +108,20 @@ namespace Maths
                 case "میانگین گیر":
                     Navigation.PushAsync(new AverageCalculator());
                     break;
+                case "Quadratic Equation Solver":
+                case "معادله درجه دو":
+                    Navigation.PushAsync(new QuadraticEquationSolver());
+                    break;
             }
         }
-        async void ShowUpdateDialog(int RemoteBuild)
+        private async void ShowUpdateDialog(int remoteBuild)
         {
             string message;
             if (SelectedLanguage == LanguageE.English)
                 message = "An update found for Maths to build version ";
             else
                 message = "یک آپدیت برای اپلیکیشن به شماره ی ساخت ";
-            message += RemoteBuild;
+            message += remoteBuild;
             if (SelectedLanguage == LanguageE.English)
                 message += ". Do you want to update now?";
             else

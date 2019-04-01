@@ -6,10 +6,9 @@
              NavigationPage.HasBackButton="False"
              Title="Maths">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="?" Clicked="MenuToolBarClicked"/>
+        <ToolbarItem Text="?" Clicked="MenuToolBarClicked"/>
     </ContentPage.ToolbarItems>
     <StackLayout>
-        <ListView RowHeight="100" x:Name="MainList"/>
+        <ListView x:Name="MainList" HasUnevenRows="true" />
     </StackLayout>
-
 </ContentPage>

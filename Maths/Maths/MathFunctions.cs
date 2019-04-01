@@ -16,7 +16,21 @@ namespace Maths
             return b == 0 ? a : GCD(b, a % b);
         }
         /// <summary>
-        /// Factorize a number to prime factors
+        /// Find GCD of multiple numbers
+        /// </summary>
+        /// <param name="numbers">Numbers</param>
+        /// <returns>GCD</returns>
+        public static ulong MultiGCD(params ulong[] numbers)
+        {
+            if(numbers.Length < 2)
+                throw new ArgumentException("Enter at least 2 numbers.");
+            ulong res = GCD(numbers[0], numbers[1]);
+            for (int i = 2; i < numbers.Length; i++)
+                res = GCD(res, numbers[i]);
+            return res;
+        }
+        /// <summary>
+        /// Factorize numbers number to prime factors
         /// </summary>
         /// <param name="num">The number to factorize</param>
         /// <returns>List of prime factors</returns>
@@ -49,6 +63,12 @@ namespace Maths
             }
             return factorized.ToArray();
         }
+        /// <summary>
+        /// Checks if numbers double is integer https://stackoverflow.com/numbers/2751597/4213397
+        /// </summary>
+        /// <param name="d">Double to check</param>
+        /// <returns>True if integer</returns>
+        public static bool IsInteger(this double d) => Math.Abs(d % 1) < double.Epsilon;
     }
     /// <summary>
     /// This class is used for single cell list views
