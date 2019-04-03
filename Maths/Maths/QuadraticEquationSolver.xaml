@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Maths.QuadraticEquationSolver">
+             x:Class="Maths.QuadraticEquationSolver"
+             Title="Quadratic Solver">
     <ContentPage.Content>
         <StackLayout Padding="15">
-            <Label Text="Suppose the equation below, enter a, b and c" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="Suppose the equation below, enter a, b and c" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" x:Name="LabelInfo"/>
             <Label FontFamily="{StaticResource NormalFontMath}" Text="𝑎𝑥² + 𝑏𝑥 + 𝑐 = 0" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
             <Grid Margin="0,20,0,0" HorizontalOptions="CenterAndExpand">
                 <Grid.ColumnDefinitions>

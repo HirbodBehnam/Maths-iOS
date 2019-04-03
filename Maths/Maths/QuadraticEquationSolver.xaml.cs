@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,7 +16,9 @@ namespace Maths
 			InitializeComponent ();
             if (MainPage.SelectedLanguage == LanguageE.Persian)
             {
-                
+                LabelInfo.Text = "معادله ی زیر را در نظر بگیرید. آنگاه a و b و c را وارد کنید.";
+                ButtonCalculate.Text = "حل کن";
+                Title = "معادله درجه دو";
             }
 		}
 
@@ -96,8 +96,8 @@ namespace Maths
                     deltaNormalized[1] *= SimplePower(variable.Key, variable.Value % 2);
                 }
 
-                ulong gcd,newA = (ulong)Math.Abs(a),newB = (ulong)Math.Abs(b);
-                gcd = MathFunctions.MultiGCD(deltaNormalized[0], newB, newA);
+                ulong newA = (ulong)Math.Abs(a),newB = (ulong)Math.Abs(b);
+                ulong gcd = MathFunctions.MultiGCD(deltaNormalized[0], newB, newA);
                 if (gcd != 1)
                 {
                     deltaNormalized[0] /= gcd;
