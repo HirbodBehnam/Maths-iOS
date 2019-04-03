@@ -9,7 +9,7 @@ namespace Maths
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ModPage : ContentPage
 	{
-        private string Res = "0";
+        private string _res = "0";
 		public ModPage ()
 		{
 			InitializeComponent ();
@@ -43,39 +43,33 @@ namespace Maths
                 return;
             }
             big1 %= big2; //Now big1 is mod
-            Res = big1.ToString();
+            _res = big1.ToString();
             if (big1 > (big2 / 2))
             {
                 big1 -= big2;
-                Res += " ( ";
+                _res += " ( ";
                 if (LanguageC.SavedLanguage() == LanguageE.English)
-                    Res += big1.ToString();
+                    _res += big1.ToString();
                 else
                 {
                     big1 = -big1;
-                    Res += big1.ToString() + "-";
+                    _res += big1 + "-";
                 }
-                Res += " )";
+                _res += " )";
             }
             if (LanguageC.SavedLanguage() == LanguageE.English)
-                Result.Text = "Reminder is " + Res;
+                Result.Text = "Reminder is " + _res;
             else
-                Result.Text = "باقی مانده برابر است با " + Res;
+                Result.Text = "باقی مانده برابر است با " + _res;
         }
         private async void ToolbarItemCopy_Clicked(object sender, EventArgs e)
         {
             Vibration.Vibrate(100);
-            await Clipboard.SetTextAsync(Res);
+            await Clipboard.SetTextAsync(_res);
         }
 
-        private void ModDividend_Completed(object sender, EventArgs e)
-        {
-            ModDivisor.Focus();
-        }
+        private void ModDividend_Completed(object sender, EventArgs e) => ModDivisor.Focus();
 
-        private void ModDivisor_Completed(object sender, EventArgs e)
-        {
-            FindBTN_Clicked(null, null);
-        }
+        private void ModDivisor_Completed(object sender, EventArgs e) => FindBTN_Clicked(null, null);
     }
 }

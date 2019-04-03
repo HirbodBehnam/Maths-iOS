@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-
+using System.Globalization;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,11 +10,11 @@ namespace Maths
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AverageCalculator : ContentPage
     {
-        private ObservableCollection<StringInListWithID> ListAdaptor = new ObservableCollection<StringInListWithID>();
-        private string AverageRes = "0";
-        private BigDecimal sum = 0;
-        private uint NumbersCount = 0;
-        private ulong IDCounterListItems = 0;
+        private ObservableCollection<StringInListWithId> ListAdaptor = new ObservableCollection<StringInListWithId>();
+        private string _averageRes = "0";
+        private BigDecimal _sum = 0;
+        private uint _numbersCount;
+        private ulong _idCounterListItems;
         public AverageCalculator()
         {
             InitializeComponent();
@@ -30,9 +30,9 @@ namespace Maths
         }
         public void OnDelete(object sender, EventArgs e)
         {
-            StringInListWithID mi = (StringInListWithID)((MenuItem)sender).CommandParameter;
-            NumbersCount--;
-            sum -= Convert.ToDecimal(mi.ToString());
+            StringInListWithId mi = (StringInListWithId)((MenuItem)sender).CommandParameter;
+            _numbersCount--;
+            _sum -= Convert.ToDecimal(mi.ToString());
             for(int i = 0;i<ListAdaptor.Count;i++)
                 if(ListAdaptor[i].ID == mi.ID)
                 {
@@ -40,23 +40,23 @@ namespace Maths
                     break;
                 }
             SetPrecision();
-            if (NumbersCount > 0)
+            if (_numbersCount > 0)
             {
-                AverageRes = (sum / (double)NumbersCount).ToString();
-                Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + AverageRes;
+                _averageRes = (_sum / (double)_numbersCount).ToString();
+                Result.Text = "Sum: " + _sum + "\nCount: " + _numbersCount + "\nAverage: " + _averageRes;
             }
             else
             {
-                AverageRes = "0";
+                _averageRes = "0";
                 Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
             }
         }
         private void Button_Clicked(object sender, EventArgs e)
         {
-            decimal Num;
+            decimal num;
             try
             {
-                Num = decimal.Parse(Input.Text);
+                num = decimal.Parse(Input.Text);
             }
             catch (OverflowException)
             {
@@ -77,16 +77,16 @@ namespace Maths
                 DisplayAlert("Unhandled Exception", ex.ToString(), "OK");
                 return;
             }
-            ListAdaptor.Add(new StringInListWithID() { ListString = Num.ToString(),ID = IDCounterListItems++ });
-            sum += Num;
-            NumbersCount++;
+            ListAdaptor.Add(new StringInListWithId() { ListString = num.ToString(CultureInfo.CurrentCulture),ID = _idCounterListItems++ });
+            _sum += num;
+            _numbersCount++;
             SetPrecision();
-            AverageRes = (sum / (double)NumbersCount).ToString();
+            _averageRes = (_sum / (double)_numbersCount).ToString();
             //Update result
-            Result.Text = "Sum: " + sum.ToString() + "\nCount: " + NumbersCount + "\nAverage: " + AverageRes;
+            Result.Text = "Sum: " + _sum + "\nCount: " + _numbersCount + "\nAverage: " + _averageRes;
             Input.Text = "";
         }
-        private void SetPrecision() => BigDecimal.Precision = sum.ToString().Length + 15;
+        private void SetPrecision() => BigDecimal.Precision = _sum.ToString().Length + 15;
 
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
@@ -99,20 +99,20 @@ namespace Maths
                 Preferences.Set("AverageCalculatorDeleteInfoShowed", true);
                 return;
             }
-            sum = 0;
-            NumbersCount = 0;
+            _sum = 0;
+            _numbersCount = 0;
             ListAdaptor.Clear();
             Result.Text = "Sum: 0\nCount: 0\nAverage: 0";
         }
         private async void ToolbarItemCopy_Clicked(object sender, EventArgs e)
         {
             Vibration.Vibrate(100);
-            await Clipboard.SetTextAsync(AverageRes);
+            await Clipboard.SetTextAsync(_averageRes);
         }
         /// <summary>
         /// This is exactly <see cref="StringInList"/> but also with an ID parameter
         /// </summary>
-        private class StringInListWithID
+        private class StringInListWithId
         {
             /// <summary>
             /// String to show in list

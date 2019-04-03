@@ -12,9 +12,9 @@ namespace Maths
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class GCD : ContentPage
 	{
-        private string Res = "0";
-        private int i;
-        private bool Done = false;
+        private string _res = "0";
+        private int _i;
+        private bool _done;
 		public GCD ()
 		{
 			InitializeComponent ();
@@ -38,22 +38,22 @@ namespace Maths
         {
             ulong[] nums;
             {//Get the numbers
-                i = 0;
-                string[] numbersSplitted = EntryNumbers.Text.Split(',');
-                nums = new ulong[numbersSplitted.Length];
+                _i = 0;
+                string[] numbersSplit = EntryNumbers.Text.Split(',');
+                nums = new ulong[numbersSplit.Length];
                 try
                 {
-                    for (; i < numbersSplitted.Length; i++)
+                    for (; _i < numbersSplit.Length; _i++)
                     {
-                        nums[i] = Convert.ToUInt64(numbersSplitted[i].Trim());
-                        if (nums[i] == 0)
+                        nums[_i] = Convert.ToUInt64(numbersSplit[_i].Trim());
+                        if (nums[_i] == 0)
                         {
                             DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
                                 MainPage.SelectedLanguage == LanguageE.English ? "You cannot input 0." : "عدد نمی تواند صفر باشد.",
                                 MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                             return;
                         }
-                        if (nums[i] == 1)
+                        if (nums[_i] == 1)
                         {
                             Result.Text = MainPage.SelectedLanguage == LanguageE.English ? "The GCD is: 1" : "ب.م.م برابر یک است.";
                             return;
@@ -63,14 +63,14 @@ namespace Maths
                 catch (OverflowException)
                 {
                     DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
-                        MainPage.SelectedLanguage == LanguageE.English ? $"Too big number on index {i + 1} ({numbersSplitted[i]})." : "عدد خیلی بزرگی وارد کریدید:\n" + numbersSplitted[i],
+                        MainPage.SelectedLanguage == LanguageE.English ? $"Too big number on index {_i + 1} ({numbersSplit[_i]})." : "عدد خیلی بزرگی وارد کریدید:\n" + numbersSplit[_i],
                         MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                     return;
                 }
                 catch (FormatException)
                 {
                     DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
-                        MainPage.SelectedLanguage == LanguageE.English ? $"Invalid formatted number on index {i + 1} ({numbersSplitted[i]})." : "عدد نامعتبری وارد کریدید:\n" + numbersSplitted[i],
+                        MainPage.SelectedLanguage == LanguageE.English ? $"Invalid formatted number on index {_i + 1} ({numbersSplit[_i]})." : "عدد نامعتبری وارد کریدید:\n" + numbersSplit[_i],
                         MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                     return;
                 }
@@ -87,39 +87,39 @@ namespace Maths
                     MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
-            Done = false;
+            _done = false;
             popupLoadingView.IsVisible = true;
             if (LCMorGCDSwitch.IsToggled) //LCM
             {
-                i = 0;
+                _i = 0;
                 //Main calculation
                 new Task(() =>
                 {
                     BigInteger big = new BigInteger(nums[0]);
                     BigInteger numTemp;
-                    for (i = 1; i < nums.Length; i++)
+                    for (_i = 1; _i < nums.Length; _i++)
                     {
-                        numTemp = nums[i];
+                        numTemp = nums[_i];
                         big = big / BigInteger.GreatestCommonDivisor(big, numTemp) * numTemp;
                     }
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        Res = big.ToString();
+                        _res = big.ToString();
                         if (MainPage.SelectedLanguage == LanguageE.English)
-                            Result.Text = "The LCM is: " + Res;
+                            Result.Text = "The LCM is: " + _res;
                         else
-                            Result.Text = "ک.م.م برابر است با " + Res;
+                            Result.Text = "ک.م.م برابر است با " + _res;
                     });
                     popupLoadingView.IsVisible = false;
                 }).Start();
                 //Progress report
                 new Task(() =>
                 {
-                    while (!Done)
+                    while (!_done)
                     {
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
-                            popupProgress.Progress = (double)i / nums.Length;
+                            popupProgress.Progress = (double)_i / nums.Length;
                         });
                         Thread.Sleep(200);
                     }
@@ -130,27 +130,27 @@ namespace Maths
                 //Main calculation
                 new Task(() =>
                 {
-                    for (i = nums.Length; i-- > 1;)
-                        nums[i - 1] = MathFunctions.GCD(nums[i - 1], nums[i]);
-                    Done = true;
+                    for (_i = nums.Length; _i-- > 1;)
+                        nums[_i - 1] = MathFunctions.GCD(nums[_i - 1], nums[_i]);
+                    _done = true;
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        Res = nums[0].ToString();
+                        _res = nums[0].ToString();
                         if (MainPage.SelectedLanguage == LanguageE.English)
-                            Result.Text = "The GCD is: " + Res;
+                            Result.Text = "The GCD is: " + _res;
                         else
-                            Result.Text = "ب.م.م برابر است با " + Res;
+                            Result.Text = "ب.م.م برابر است با " + _res;
                     });
                     popupLoadingView.IsVisible = false;
                 }).Start();
                 //Progress report
                 new Task(() =>
                 {
-                    while (!Done)
+                    while (!_done)
                     {
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
-                            popupProgress.Progress = 1d - ((double)i / nums.Length);
+                            popupProgress.Progress = 1d - ((double)_i / nums.Length);
                         });
                         Thread.Sleep(200);
                     }
@@ -160,12 +160,9 @@ namespace Maths
         private async void ToolbarItemCopy_Clicked(object sender, EventArgs e)
         {
             Vibration.Vibrate(100);
-            await Clipboard.SetTextAsync(Res);
+            await Clipboard.SetTextAsync(_res);
         }
 
-        private void EntryNumbers_Completed(object sender, EventArgs e)
-        {
-            Find_Clicked(null, null);
-        }
+        private void EntryNumbers_Completed(object sender, EventArgs e) => Find_Clicked(null, null);
     }
 }

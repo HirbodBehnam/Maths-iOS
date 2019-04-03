@@ -12,8 +12,8 @@ namespace Maths
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Factors : ContentPage
 	{
-        private ulong i;
-        private bool DONE = false;
+        private ulong _i;
+        private bool _done;
         public Factors ()
 		{
 			InitializeComponent ();
@@ -36,12 +36,12 @@ namespace Maths
         }
         private void Button_Clicked(object sender, EventArgs e)
         {
-            ulong Number;
+            ulong number;
             //Get number from input
             try
             {
-                Number = Convert.ToUInt64(FactorsInput.Text);
-                if (Number < 1)
+                number = Convert.ToUInt64(FactorsInput.Text);
+                if (number < 1)
                     throw new FormatException();
             }
             catch (OverflowException)
@@ -63,19 +63,19 @@ namespace Maths
                 DisplayAlert("Unhandled Exception", ex.ToString(), "OK");
                 return;
             }
-            DONE = false;
-            ulong TO = (ulong)Math.Sqrt(Number);
-            i = 0;
+            _done = false;
+            ulong to = (ulong)Math.Sqrt(number);
+            _i = 0;
             popupLoadingView.IsVisible = true;
             new Task(() =>
             {
                 List<ulong> factors = new List<ulong>();
-                for (i = 1; i <= TO; i++)
+                for (_i = 1; _i <= to; _i++)
                 {
-                    if (Number % i == 0)
+                    if (number % _i == 0)
                     {
-                        factors.Add(i);
-                        factors.Add(Number / i);
+                        factors.Add(_i);
+                        factors.Add(number / _i);
                     }
                 }
                 factors.Sort();
@@ -83,32 +83,32 @@ namespace Maths
                     factors.RemoveAt(factors.Count / 2);
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    ObservableCollection<StringInList> FactorsAdaptor = new ObservableCollection<StringInList>();
+                    ObservableCollection<StringInList> factorsAdapter = new ObservableCollection<StringInList>();
                     //Show
-                    foreach (long a in factors)
-                        FactorsAdaptor.Add(new StringInList { ListString = a.ToString() });
-                    ResultList.ItemsSource = FactorsAdaptor;
+                    foreach (ulong a in factors)
+                        factorsAdapter.Add(new StringInList { ListString = a.ToString() });
+                    ResultList.ItemsSource = factorsAdapter;
                     if (MainPage.SelectedLanguage == LanguageE.English)
-                        Result.Text = Number + " has " + factors.Count + " factors.";
+                        Result.Text = number + " has " + factors.Count + " factors.";
                     else
                     {
                         Result.Text = "عدد ";
-                        Result.Text += Number;
+                        Result.Text += number;
                         Result.Text += " دارای ";
                         Result.Text += factors.Count;
                         Result.Text += " شمارنده است.";
                     }
                     popupLoadingView.IsVisible = false;
                 });
-                DONE = true;
+                _done = true;
             }).Start();
             new Task(() =>
             {
-                while (!DONE)
+                while (!_done)
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        popupProgress.Progress = (double)i / TO;
+                        popupProgress.Progress = (double)_i / to;
                     });
                     Thread.Sleep(200);
                 }

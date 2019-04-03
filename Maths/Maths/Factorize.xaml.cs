@@ -27,11 +27,11 @@ namespace Maths
 
         private void FindBTN_Clicked(object sender, EventArgs e)
         {
-            ulong Number;
+            ulong number;
             //Get number from input
             try
             {
-                Number = Convert.ToUInt64(InputEntry.Text);
+                number = Convert.ToUInt64(InputEntry.Text);
             }
             catch (OverflowException)
             {
@@ -52,7 +52,7 @@ namespace Maths
                 DisplayAlert("Unhandled Exception", ex.ToString(), "OK");
                 return;
             }
-            if(Number < 2)
+            if(number < 2)
             {
                 DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
                     MainPage.SelectedLanguage == LanguageE.English ? "Number cannot be less than 2." : "عدد نمی تواند کمتر از 2 باشد.",
@@ -62,31 +62,31 @@ namespace Maths
             popupLoadingView.IsVisible = true;
             new Task(() =>
             {
-                ulong[] array = MathFunctions.Factorize(Number);
+                ulong[] array = MathFunctions.Factorize(number);
                 Dictionary<string, string> numberOfOccurring = new Dictionary<string, string>();
                 {//Count Occurring
-                    int Occurr = 0;
-                    ulong Now = array[0];
+                    int occur = 0;
+                    ulong now = array[0];
                     foreach(ulong i in array)
                     {
-                        if(Now != i)
+                        if(now != i)
                         {
-                            numberOfOccurring.Add(Now.ToString(), Occurr.ToString());
-                            Now = i;
-                            Occurr = 0;
+                            numberOfOccurring.Add(now.ToString(), occur.ToString());
+                            now = i;
+                            occur = 0;
                         }
-                        Occurr++;
+                        occur++;
                     }
-                    numberOfOccurring.Add(Now.ToString(), Occurr.ToString());
+                    numberOfOccurring.Add(now.ToString(), occur.ToString());
                 }
-                char[] SuperScripts = new char[] { '⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹' };
+                char[] superScripts = { '⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹' };
                 StringBuilder sb = new StringBuilder();
                 foreach(var i in numberOfOccurring)
                 {
                     sb.Append(i.Key);
                     if(i.Value != "1")
                         foreach(char c in i.Value)
-                            sb.Append(SuperScripts[Convert.ToInt32(c.ToString())]);
+                            sb.Append(superScripts[Convert.ToInt32(c.ToString())]);
                     sb.Append(" × ");
                 }
                 sb.Length -= 2;

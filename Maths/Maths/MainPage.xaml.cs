@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -116,11 +115,7 @@ namespace Maths
         }
         private async void ShowUpdateDialog(int remoteBuild)
         {
-            string message;
-            if (SelectedLanguage == LanguageE.English)
-                message = "An update found for Maths to build version ";
-            else
-                message = "یک آپدیت برای اپلیکیشن به شماره ی ساخت ";
+            string message = SelectedLanguage == LanguageE.English ? "An update found for Maths to build version " : "یک آپدیت برای اپلیکیشن به شماره ی ساخت ";
             message += remoteBuild;
             if (SelectedLanguage == LanguageE.English)
                 message += ". Do you want to update now?";

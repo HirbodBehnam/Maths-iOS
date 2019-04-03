@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,8 +11,8 @@ namespace Maths
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PrimeCheck : ContentPage
 	{
-        private ulong TO = 0, i = 0;
-        private bool Done = false;
+        private ulong _to, _i;
+        private bool _done;
 		public PrimeCheck ()
 		{
 			InitializeComponent ();
@@ -39,10 +36,10 @@ namespace Maths
         private void FindBTN_Clicked(object sender, EventArgs e)
         {
             //Get number from input
-            ulong Number;
+            ulong number;
             try
             {
-                Number = Convert.ToUInt64(InputEntry.Text);
+                number = Convert.ToUInt64(InputEntry.Text);
             }
             catch (OverflowException)
             {
@@ -63,71 +60,71 @@ namespace Maths
                 DisplayAlert("Unhandled Exception", ex.ToString(), "OK");
                 return;
             }
-            if (Number < 2)
+            if (number < 2)
             {
                 DisplayAlert(MainPage.SelectedLanguage == LanguageE.English ? "Error" : "خطا",
                     MainPage.SelectedLanguage == LanguageE.English ? "Number cannot be less than 2." : "عدد نمی تواند کمتر از 2 باشد.",
                     MainPage.SelectedLanguage == LanguageE.English ? "OK" : "باشه");
                 return;
             }
-            Done = false;
-            i = 0; TO = 1;
+            _done = false;
+            _i = 0; _to = 1;
             popupLoadingView.IsVisible = true;
             //setup main task
             new Task(() =>
             {
                 ulong pTest = 1;
                 //Main prime checking algorithm
-                if (Number == 2 || Number == 3 || Number == 5 || Number == 7)
+                if (number == 2 || number == 3 || number == 5 || number == 7)
                     goto END;
-                if (Number % 2 == 0)
+                if (number % 2 == 0)
                 {
                     pTest = 2;
                     goto END;
                 }
-                if (Number % 3 == 0)
+                if (number % 3 == 0)
                 {
                     pTest = 3;
                     goto END;
                 }
-                TO = (uint)Math.Sqrt(Number);
-                for (i = 5; i <= TO; i += 4)
+                _to = (uint)Math.Sqrt(number);
+                for (_i = 5; _i <= _to; _i += 4)
                 {
-                    if (Number % i == 0)
+                    if (number % _i == 0)
                     {
-                        pTest = i;
+                        pTest = _i;
                         goto END;
                     }
-                    i += 2;
-                    if (Number % i == 0)
+                    _i += 2;
+                    if (number % _i == 0)
                     {
-                        pTest = i;
+                        pTest = _i;
                         goto END;
                     }
                 }
             END:
-                Done = true;
+                _done = true;
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     if (MainPage.SelectedLanguage == LanguageE.English)
                     {
                         if (pTest == 1)
-                            Result.Text = Number + " is prime.";
+                            Result.Text = number + " is prime.";
                         else
-                            Result.Text = Number + " is not prime. It can be divided by " + pTest;
+                            Result.Text = number + " is not prime. It can be divided by " + pTest;
                     }
                     else
                     {
                         if (pTest == 1)
                         {
                             Result.Text = "عدد ";
-                            Result.Text += Number;
+                            Result.Text += number;
                             Result.Text += " اول است.";
                         }
                         else
                         {
                             Result.Text = "عدد ";
-                            Result.Text += Number;
+                            Result.Text += number;
                             Result.Text += " اول نیست. این عدد بر ";
                             Result.Text += pTest;
                             Result.Text += " بخش پذیر است.";
@@ -139,11 +136,11 @@ namespace Maths
             //setup progress bar
             new Task(() =>
             {
-                while (!Done)
+                while (!_done)
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        popupProgress.Progress = (double)i / TO;
+                        popupProgress.Progress = (double)_i / _to;
                     });
                     Thread.Sleep(200);
                 }
