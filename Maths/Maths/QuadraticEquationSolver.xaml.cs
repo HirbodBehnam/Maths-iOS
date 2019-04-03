@@ -96,8 +96,8 @@ namespace Maths
                     deltaNormalized[1] *= SimplePower(variable.Key, variable.Value % 2);
                 }
 
-                ulong gcd,newA = Convert.ToUInt64(a),newB = Convert.ToUInt64(b);
-                gcd = MathFunctions.MultiGCD(deltaNormalized[0], (ulong)Math.Abs(b), (ulong)Math.Abs(a));
+                ulong gcd,newA = (ulong)Math.Abs(a),newB = (ulong)Math.Abs(b);
+                gcd = MathFunctions.MultiGCD(deltaNormalized[0], newB, newA);
                 if (gcd != 1)
                 {
                     deltaNormalized[0] /= gcd;
@@ -105,10 +105,24 @@ namespace Maths
                     newB /= gcd;
                 }
                 delta = Math.Sqrt(delta);
-                LabelResult.Text = "𝑥₁ = " + "(" + Sign(b) + newB + " + " + RootSign(deltaNormalized[0],deltaNormalized[1]) + ") / " + Sign(a) + newA +
-                                   " = "+ Convert.ToString(((b + delta) / a), CultureInfo.CurrentCulture) + "\n"+
-                                   "𝑥₂ = " + "(" + Sign(b) + newB + " - " + RootSign(deltaNormalized[0],deltaNormalized[1]) + ") / " + Sign(a) + newA +
-                                    Convert.ToString(((b - delta) / a), CultureInfo.CurrentCulture);
+                string x1 = Convert.ToString(((b + delta) / a), CultureInfo.CurrentCulture),x2 = Convert.ToString(((b - delta) / a), CultureInfo.CurrentCulture);
+                if (newA == 1)
+                {
+                    if (a > 0)
+                        LabelResult.Text = "𝑥 = " + Sign(b) + newB + " ± " +
+                                           RootSign(deltaNormalized[0], deltaNormalized[1]);
+                    else
+                        LabelResult.Text = "𝑥 = " + (b > 0 ? "-" : "") + newB + " ± " +
+                                           RootSign(deltaNormalized[0], deltaNormalized[1]);
+                    LabelResult.Text += "\n";
+                }
+                else
+                {
+                    LabelResult.Text = "𝑥 = (" + Sign(b) + newB + " ± " +
+                                       RootSign(deltaNormalized[0], deltaNormalized[1]) + ") / " + Sign(a) + newA;
+                }
+                LabelResult.Text += "𝑥₁ = " + x1 + "\n"
+                                   + "𝑥₂ = " + x2;
             }
             else
             {
@@ -129,13 +143,17 @@ namespace Maths
             while (l.Count > 0)
             {
                 ulong now = l[0];
-                ulong occur = 1;
-                for (int i = 1; i < l.Count; i++)
+                ulong occur = 0;
+                while (l.Count > 0)
                 {
-                    if (l[i] == now)
+                    if (l[0] == now)
                     {
-                        l.RemoveAt(i);
+                        l.RemoveAt(0);
                         occur++;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
                 res.Add(now,occur);
@@ -165,11 +183,11 @@ namespace Maths
         private static ulong SimplePower(ulong Base, ulong power)
         {
             ulong res = 1;
-            for (; Base > 0; Base--)
-                res *= power;
+            for (; power > 0; power--)
+                res *= Base;
             return res;
         }
-        private static string Sign(double num) => num < 0 ? "-" : "";
+        private static string Sign(double num) => num < 0 ? "-" :"";
         private static string RootSign(ulong multiplier, ulong inside)
         {
             if (inside == 1)
