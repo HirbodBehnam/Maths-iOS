@@ -9,6 +9,6 @@
         <ToolbarItem Text="?" Clicked="MenuToolBarClicked"/>
     </ContentPage.ToolbarItems>
     <StackLayout>
-        <ListView x:Name="MainList" HasUnevenRows="true" />
+        <ListView x:Name="MainList" RowHeight="120" />
     </StackLayout>
 </ContentPage>
