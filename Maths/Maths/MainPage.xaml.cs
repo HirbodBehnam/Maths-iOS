@@ -16,7 +16,7 @@ namespace Maths
             { "Factors","Find factors of a number; 6-> 1,2,3,6" },
             { "Factorize","Factorize a number to prime factors" },
             { "Mod","Find remainder of division of two numbers" },
-            { "GCD and LCM","Find greatest common divisor or least common multiple of some numbers" },
+            { "GCD and LCM","Greatest common divisor or least common multiple" },
             { "Prime Checker","Detects if a number is prime or not" },
             { "Average Calculator","Find average of some numbers" },
             { "Quadratic Equation Solver","Solves a quadratic equation"}
